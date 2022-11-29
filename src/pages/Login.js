@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-function Login(/* { history } */) {
+function Login({ history }) {
   const [buttonDisable, setButtonDisable] = useState(true);
   const [inputValue, setInputValue] = useState({
     email: '',
@@ -16,7 +17,7 @@ function Login(/* { history } */) {
 
   const onClickButton = () => {
     localStorage.setItem('user', JSON.stringify({ email: inputValue.email }));
-    // history.push('/meals');
+    history.push('/meals');
   };
 
   useEffect(() => {
@@ -65,5 +66,9 @@ function Login(/* { history } */) {
     </form>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.object,
+}.isRequired;
 
 export default Login;
