@@ -23,7 +23,7 @@ function Login(/* { history } */) {
       const emailConditions = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+?$/i;
       const passwordMinLength = 6;
       if (emailConditions.test(inputValue.email)
-        && inputValue.password.length >= passwordMinLength) {
+        && inputValue.password.length > passwordMinLength) {
         setButtonDisable(false);
       }
     };
