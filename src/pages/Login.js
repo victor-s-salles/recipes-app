@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Login() {
+function Login(/* { history } */) {
   const [buttonDisable, setButtonDisable] = useState(true);
   const [inputValue, setInputValue] = useState({
     email: '',
@@ -14,13 +14,22 @@ function Login() {
     });
   };
 
-  const buttonDisableControl = () => {
-
+  const onClickButton = () => {
+    // history.push('/meals');
   };
 
   useEffect(() => {
+    const buttonDisableControl = () => {
+      const emailConditions = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+?$/i;
+      const passwordMinLength = 6;
+      if (emailConditions.test(inputValue.email)
+        && inputValue.password.length >= passwordMinLength) {
+        setButtonDisable(false);
+      }
+    };
+
     buttonDisableControl();
-  }, []);
+  }, [inputValue]);
 
   return (
     <form className="login-form">
@@ -48,6 +57,7 @@ function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ buttonDisable }
+        onClick={ onClickButton }
       >
         Login
       </button>
