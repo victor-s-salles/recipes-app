@@ -15,6 +15,7 @@ function Login(/* { history } */) {
   };
 
   const onClickButton = () => {
+    localStorage.setItem('user', JSON.stringify({ email: inputValue.email }));
     // history.push('/meals');
   };
 
