@@ -28,10 +28,10 @@ describe('Testa página de Login', () => {
     userEvent.type(email, '@teste.com');
     loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).toBeDisabled();
-    userEvent.type(password, '123456');
+    userEvent.type(password, '12345');
     loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).toBeDisabled();
-    userEvent.type(password, '7');
+    userEvent.type(password, '67');
     loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).not.toBeDisabled();
   });
