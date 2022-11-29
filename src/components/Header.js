@@ -10,16 +10,20 @@ function Header({ pageName }) {
         {pageName}
         {' '}
       </h1>
-      <img
-        src={ profileIcon }
-        data-testid="profile-top-btn"
-        alt="Ícone de Perfil"
-      />
-      <img
-        src={ searchIcon }
-        data-testid="search-top-btn"
-        alt="Ícone de Perfil de busca"
-      />
+      <button type="button">
+        <img
+          src={ profileIcon }
+          data-testid="profile-top-btn"
+          alt="Ícone de Perfil"
+        />
+      </button>
+      <button type="button">
+        <img
+          src={ searchIcon }
+          data-testid="search-top-btn"
+          alt="Ícone de Perfil de busca"
+        />
+      </button>
     </div>
   );
 }
