@@ -7,4 +7,4 @@ const recipes = (state = INITIAL_STATE, action) => {
   }
 };
 
-export defaultlt
+export default recipes;
