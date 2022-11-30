@@ -31,20 +31,23 @@ class Drinks extends React.Component {
   }
 
   categorySelected = async ({ target }) => {
-    const { selectedCategory } = this.state;
+    const { selectedCategory, bebidas } = this.state;
+    const { dispatch } = this.props;
     const doze = 12;
 
     const selectedData = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${target.id}`);
     const categoryData = await selectedData.json();
     const dozeCategories = categoryData.drinks.slice(0, doze);
+    dispatch(recipesDrinks(dozeCategories));
 
-    this.setState({ bebidas: dozeCategories, selectedCategory: target.id });
+    this.setState({ selectedCategory: target.id });
 
-    if (target.id === selectedCategory) { this.componentDidMount(); }
+    if (target.id === selectedCategory) { dispatch(recipesDrinks(bebidas)); }
   };
 
   drinksRender = () => {
-    const { bebidas, categoriesDrink } = this.state;
+    const { categoriesDrink } = this.state;
+    const { drinkState } = this.props;
 
     return (
       <section>
@@ -67,7 +70,7 @@ class Drinks extends React.Component {
             </button>
           </div>
         ))}
-        {bebidas.map((ele, index) => (
+        {drinkState.map((ele, index) => (
           <div key={ index } data-testid={ `${index}-recipe-card` }>
             <img
               src={ ele.strDrinkThumb }
@@ -97,7 +100,7 @@ Drinks.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  drinkState: state.drinks,
+  drinkState: state.recipes.drinks,
 });
 
 export default connect(mapStateToProps)(Drinks);
