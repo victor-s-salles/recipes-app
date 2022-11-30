@@ -27,6 +27,7 @@ function Profile({ history }) {
       <button
         data-testid="profile-favorite-btn"
         type="button"
+        onClick={ () => history.push('/favorite-recipes') }
       >
         Favorite Recipes
       </button>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import Meals from '../pages/Meals';
 import Drinks from '../pages/Drinks';
-import Footer from '../components/Footer';
+import Footer from './Footer';
 
 function Recipes() {
   const history = useLocation();
