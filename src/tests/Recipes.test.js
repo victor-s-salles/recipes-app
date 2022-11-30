@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/react';
-import { renderWithRouterAndRedux } from './Helpers/RenderWith';
+import { renderWithRouterAndRedux } from './helpers/RenderWith';
 import App from '../App';
 
 describe('Pagina de Login', () => {
