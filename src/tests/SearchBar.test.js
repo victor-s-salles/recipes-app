@@ -1,6 +1,6 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { renderWithRouterAndRedux } from './helpers/RenderWith';
+import { renderWithRouterAndRedux } from './helpers/renderWith';
 import App from '../App';
 
 describe('Barra de busca', () => {
