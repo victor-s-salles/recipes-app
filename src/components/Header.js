@@ -26,21 +26,23 @@ function Header({ pageName, searchingOFF }) {
           alt="Ícone de Perfil"
         />
       </button>
-      {!searchingOFF && <div>
-        <button
-          type="button"
-          onClick={ () => {
-            setSearchDisplay(!searchDisplay);
-          } }
-        >
-          <img
-            src={ searchIcon }
-            data-testid="search-top-btn"
-            alt="Ícone de Perfil de busca"
-          />
-        </button>
-        {searchDisplay && <SearchBar />}
-      </div>}
+      {!searchingOFF && (
+        <div>
+          <button
+            type="button"
+            onClick={ () => {
+              setSearchDisplay(!searchDisplay);
+            } }
+          >
+            <img
+              src={ searchIcon }
+              data-testid="search-top-btn"
+              alt="Ícone de Perfil de busca"
+            />
+          </button>
+          {searchDisplay && <SearchBar />}
+        </div>
+      )}
     </div>
   );
 }
@@ -50,6 +52,7 @@ Header.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  searchingOFF: PropTypes.bool.isRequired,
 };
 
 export default Header;
