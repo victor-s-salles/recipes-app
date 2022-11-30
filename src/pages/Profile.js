@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-function Profile() {
+function Profile({ history }) {
   const [email, setEmail] = useState('');
 
   const getLocalStorageEmail = () => {
@@ -19,6 +20,7 @@ function Profile() {
       <button
         data-testid="profile-done-btn"
         type="button"
+        onClick={ () => history.push('/done-recipes') }
       >
         Done Recipes
       </button>
@@ -37,5 +39,9 @@ function Profile() {
     </div>
   );
 }
+
+Profile.propTypes = {
+  history: PropTypes.object,
+}.isRequired;
 
 export default Profile;
