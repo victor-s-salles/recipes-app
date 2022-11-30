@@ -2,16 +2,18 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchRecipeId } from '../redux/actions';
 
-function RecipeDetails() {
+function RecipeDetails({ match: { params: { id } } }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    const recipe = async () => {
-      await dispatch(fetchRecipeId());
+    const getRecipe = async () => {
+      dispatch(fetchRecipeId(id));
     };
-    recipe();
+    getRecipe();
   }, []);
   return (
+
     <h1>recipedetatils</h1>
+
   );
 }
 

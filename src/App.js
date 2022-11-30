@@ -1,11 +1,19 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Recipes from './Components/Recipes';
+import RecipeDetails from './components/RecipeDetails';
 import './App.css';
 
 function App() {
   return (
-    <Route exact path="/" component={ Login } />
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/meals" component={ Recipes } />
+      <Route exact path="/drinks" component={ Recipes } />
+      <Route exact path="/meals/:id" component={ RecipeDetails } />
+      <Route exact path="/drinks/:id" component={ RecipeDetails } />
+    </Switch>
   );
 }
 

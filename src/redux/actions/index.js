@@ -4,19 +4,23 @@ import getRecipeForId from '../../services/getRecipeForId';
 export const REQUEST_RECIPES = 'REQUEST_RECIPES';
 export const RECEIVE_RECIPE_FOR_ID = 'RECEIVE_RECIPE_FOR_ID';
 export const RECEIVE_RECIPES = 'RECEIVE_RECIPES';
+export const DRINKS = 'DRINKS';
+export const MEALS = 'MEALS';
 
 const requestRecipes = () => ({
   type: REQUEST_RECIPES,
 });
 
-const receiveRecipeforId = (RecipeId) => ({
+const receiveRecipeforId = (recipeId) => ({
   type: RECEIVE_RECIPE_FOR_ID,
-  payload: RecipeId,
+  payload: {
+    recipeId,
+  },
 });
 
-const receiveRecipes = (Recipes) => ({
+const receiveRecipes = (recipes) => ({
   type: RECEIVE_RECIPES,
-  payload: Recipes,
+  payload: recipes,
 });
 
 // const fetchRecipeId = async (dispatch) => {
@@ -31,11 +35,12 @@ const receiveRecipes = (Recipes) => ({
 //     }
 //   };
 
-export function fetchRecipeId(url, id) {
+export function fetchRecipeId(id) {
   return (dispatch) => {
     dispatch(requestRecipes());
-    const RecipeId = getRecipeForId(url, id);
-    return dispatch(receiveRecipeforId(RecipeId));
+    const recipeId = getRecipeForId(id);
+    console.log(recipeId);
+    return dispatch(receiveRecipeforId(recipeId));
   };
 }
 
@@ -46,3 +51,13 @@ export function fetchAllRecipes(url) {
     return dispatch(receiveRecipes(Recipes));
   };
 }
+
+export const recipesDrinks = (drinksValue) => ({
+  type: 'DRINKS',
+  drinks: drinksValue,
+});
+
+export const recipesMeals = (mealsValue) => ({
+  type: 'MEALS',
+  meals: mealsValue,
+});
