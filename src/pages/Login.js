@@ -1,19 +1,74 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-function Login() {
+function Login({ history }) {
+  const [buttonDisable, setButtonDisable] = useState(true);
+  const [inputValue, setInputValue] = useState({
+    email: '',
+    password: '',
+  });
+
+  const onInputChange = (event) => {
+    setInputValue({
+      ...inputValue,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onClickButton = () => {
+    localStorage.setItem('user', JSON.stringify({ email: inputValue.email }));
+    history.push('/meals');
+  };
+
+  useEffect(() => {
+    const buttonDisableControl = () => {
+      const emailConditions = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+?$/i;
+      const passwordMinLength = 6;
+      if (emailConditions.test(inputValue.email)
+        && inputValue.password.length > passwordMinLength) {
+        setButtonDisable(false);
+      }
+    };
+
+    buttonDisableControl();
+  }, [inputValue]);
+
   return (
     <form className="login-form">
       <label htmlFor="email">
         <p>Email:</p>
-        <input id="email" name="email" data-testid="email-input" />
+        <input
+          data-testid="email-input"
+          id="email"
+          name="email"
+          value={ inputValue.email }
+          onChange={ onInputChange }
+        />
       </label>
       <label htmlFor="password">
         <p>Senha:</p>
-        <input id="password" name="password" data-testid="password-input" />
+        <input
+          data-testid="password-input"
+          id="password"
+          name="password"
+          value={ inputValue.password }
+          onChange={ onInputChange }
+        />
       </label>
-      <button type="button" data-testid="login-submit-btn">Login</button>
+      <button
+        type="button"
+        data-testid="login-submit-btn"
+        disabled={ buttonDisable }
+        onClick={ onClickButton }
+      >
+        Login
+      </button>
     </form>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.object,
+}.isRequired;
 
 export default Login;
