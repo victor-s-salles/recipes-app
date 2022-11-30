@@ -17,12 +17,10 @@ class Meals extends React.Component {
     const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const mealsData = await responseMeals.json();
     const dozeMeals = mealsData.meals.slice(0, doze);
-    console.log(dozeMeals);
 
     const responseCategories = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const mealsCategoriesData = await responseCategories.json();
     const cincoCategoriesMeals = mealsCategoriesData.meals.slice(0, cinco);
-    console.log(cincoCategoriesMeals);
 
     dispatch(recipesMeals(cincoCategoriesMeals));
     this.setState({
@@ -31,15 +29,34 @@ class Meals extends React.Component {
     });
   }
 
+  categorySelected = async ({ target }) => {
+    const doze = 12;
+
+    const selectedData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.id}`);
+    const categoryData = await selectedData.json();
+    const dozeCategories = categoryData.meals.slice(0, doze);
+
+    this.setState({ comidas: dozeCategories });
+  };
+
   mealsRender = () => {
     const { comidas, categoriesMeals } = this.state;
 
     return (
       <section>
+        <button
+          type="button"
+          onClick={ () => { this.componentDidMount(); } }
+          data-testid="All-category-filter"
+        >
+          All
+        </button>
         {categoriesMeals.map((ele, index2) => (
           <div key={ index2 }>
             <button
               type="button"
+              id={ ele.strCategory }
+              onClick={ this.categorySelected }
               data-testid={ `${ele.strCategory}-category-filter` }
             >
               { ele.strCategory }

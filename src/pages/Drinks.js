@@ -17,29 +17,50 @@ class Drinks extends React.Component {
     const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const drinksData = await responseDrinks.json();
     const dozeDrinks = drinksData.drinks.slice(0, doze);
-    console.log(dozeDrinks);
 
     const responseCategories = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
     const categoriesDrinkData = await responseCategories.json();
     const cincoCategoriesDrinks = categoriesDrinkData.drinks.slice(0, cinco);
-    console.log(cincoCategoriesDrinks);
 
     dispatch(recipesDrinks(dozeDrinks));
     this.setState({
       bebidas: dozeDrinks,
       categoriesDrink: cincoCategoriesDrinks,
+      selectedCategory: '',
     });
   }
+
+  categorySelected = async ({ target }) => {
+    const { selectedCategory } = this.state;
+    const doze = 12;
+
+    const selectedData = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${target.id}`);
+    const categoryData = await selectedData.json();
+    const dozeCategories = categoryData.drinks.slice(0, doze);
+
+    this.setState({ bebidas: dozeCategories, selectedCategory: target.id });
+
+    if (target.id === selectedCategory) { this.componentDidMount(); }
+  };
 
   drinksRender = () => {
     const { bebidas, categoriesDrink } = this.state;
 
     return (
       <section>
+        <button
+          type="button"
+          onClick={ () => { this.componentDidMount(); } }
+          data-testid="All-category-filter"
+        >
+          All
+        </button>
         {categoriesDrink.map((ele, index2) => (
           <div key={ index2 }>
             <button
               type="button"
+              id={ ele.strCategory }
+              onClick={ this.categorySelected }
               data-testid={ `${ele.strCategory}-category-filter` }
             >
               { ele.strCategory }
@@ -76,7 +97,7 @@ Drinks.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  drinks: state.drinks,
+  drinkState: state.drinks,
 });
 
 export default connect(mapStateToProps)(Drinks);
