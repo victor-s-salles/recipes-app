@@ -22,7 +22,7 @@ class Meals extends React.Component {
     const mealsCategoriesData = await responseCategories.json();
     const cincoCategoriesMeals = mealsCategoriesData.meals.slice(0, cinco);
 
-    dispatch(recipesMeals(cincoCategoriesMeals));
+    dispatch(recipesMeals(dozeMeals));
     this.setState({
       comidas: dozeMeals,
       categoriesMeals: cincoCategoriesMeals,
@@ -31,20 +31,23 @@ class Meals extends React.Component {
   }
 
   categorySelected = async ({ target }) => {
-    const { selectedCategory } = this.state;
+    const { selectedCategory, comidas } = this.state;
+    const { dispatch } = this.props;
     const doze = 12;
 
     const selectedData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.id}`);
     const categoryData = await selectedData.json();
     const dozeCategories = categoryData.meals.slice(0, doze);
+    dispatch(recipesMeals(dozeCategories));
 
-    this.setState({ comidas: dozeCategories, selectedCategory: target.id });
+    this.setState({ selectedCategory: target.id });
 
-    if (target.id === selectedCategory) { this.componentDidMount(); }
+    if (target.id === selectedCategory) { dispatch(recipesMeals(comidas)); }
   };
 
   mealsRender = () => {
-    const { comidas, categoriesMeals } = this.state;
+    const { categoriesMeals } = this.state;
+    const { mealsState } = this.props;
 
     return (
       <section>
@@ -67,7 +70,7 @@ class Meals extends React.Component {
             </button>
           </div>
         ))}
-        {comidas.map((ele, index) => (
+        {mealsState.map((ele, index) => (
           <div key={ index } data-testid={ `${index}-recipe-card` }>
             <img
               src={ ele.strMealThumb }
@@ -97,7 +100,7 @@ Meals.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  meals: state.meals,
+  mealsState: state.recipes.meals,
 });
 
 export default connect(mapStateToProps)(Meals);
