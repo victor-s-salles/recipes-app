@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesMeals } from '../redux/actions';
+import Header from '../components/Header';
 
 class Meals extends React.Component {
   state = {
-    comidas: [],
     categoriesMeals: [],
+    selectedCategory: '',
+    comidas: [],
   };
 
   async componentDidMount() {
@@ -23,10 +25,11 @@ class Meals extends React.Component {
     const cincoCategoriesMeals = mealsCategoriesData.meals.slice(0, cinco);
 
     dispatch(recipesMeals(dozeMeals));
+
     this.setState({
-      comidas: dozeMeals,
       categoriesMeals: cincoCategoriesMeals,
       selectedCategory: '',
+      comidas: dozeMeals,
     });
   }
 
@@ -43,7 +46,8 @@ class Meals extends React.Component {
     this.setState({ selectedCategory: target.id });
 
     if (target.id === selectedCategory) {
-      dispatch(recipesMeals(comidas)); this.setState({ selectedCategory: '' });
+      dispatch(recipesMeals(comidas));
+      this.setState({ selectedCategory: '' });
     }
   };
 
@@ -60,6 +64,7 @@ class Meals extends React.Component {
         >
           All
         </button>
+        <Header pageName="Meals" />
         {categoriesMeals.map((ele, index2) => (
           <div key={ index2 }>
             <button
@@ -90,13 +95,11 @@ class Meals extends React.Component {
   render() {
     return (
       <div>
-        <h1>MEALS</h1>
         {this.mealsRender()}
       </div>
     );
   }
 }
-
 Meals.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
