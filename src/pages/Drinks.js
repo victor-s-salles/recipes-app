@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { recipesDrinks } from '../redux/actions';
+import Header from '../components/Header';
 
 class Drinks extends React.Component {
   state = {
@@ -47,11 +49,6 @@ class Drinks extends React.Component {
     }
   };
 
-  handleClick = () => {
-    const { history } = this.props;
-    history.push('/');
-  };
-
   drinksRender = () => {
     const { categoriesDrink } = this.state;
     const { drinkState } = this.props;
@@ -65,6 +62,7 @@ class Drinks extends React.Component {
         >
           All
         </button>
+        <Header pageName="Drinks" />
         {categoriesDrink.map((ele, index2) => (
           <div key={ index2 }>
             <button
@@ -77,22 +75,24 @@ class Drinks extends React.Component {
             </button>
           </div>
         ))}
+
         {drinkState.map((ele, index) => (
-          <div
-            className="card-recipe"
-            key={ index }
-            data-testid={ `${index}-recipe-card` }
-            onClick={ () => { this.handleClick(); } }
-            aria-hidden="true"
-          >
-            <img
-              src={ ele.strDrinkThumb }
-              alt={ `${ele.strDrink} imagem` }
-              width="200px"
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{ele.strDrink}</p>
-          </div>
+          <Link to={ `/drinks/${ele.idDrink}` } key={ index }>
+            <div
+              className="card-recipe"
+              key={ index }
+              data-testid={ `${index}-recipe-card` }
+              aria-hidden="true"
+            >
+              <img
+                src={ ele.strDrinkThumb }
+                alt={ `${ele.strDrink} imagem` }
+                width="200px"
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{ele.strDrink}</p>
+            </div>
+          </Link>
         ))}
       </section>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { recipesMeals } from '../redux/actions';
 import Header from '../components/Header';
@@ -77,16 +78,19 @@ class Meals extends React.Component {
             </button>
           </div>
         ))}
+
         {mealsState.map((ele, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ ele.strMealThumb }
-              alt=""
-              width="200px"
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{ele.strMeal}</p>
-          </div>
+          <Link to={ `/meals/${ele.idMeal}` } key={ index }>
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ ele.strMealThumb }
+                alt=""
+                width="200px"
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{ele.strMeal}</p>
+            </div>
+          </Link>
         ))}
       </section>
     );
