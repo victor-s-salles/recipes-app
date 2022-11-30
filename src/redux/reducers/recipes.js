@@ -25,7 +25,7 @@ const recipes = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       IsFething: false,
-      recipesForId: action.payload.recipeId,
+      recipesForId: action.payload,
     };
   }
   case RECEIVE_RECIPES: {

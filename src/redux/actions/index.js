@@ -13,9 +13,7 @@ const requestRecipes = () => ({
 
 const receiveRecipeforId = (recipeId) => ({
   type: RECEIVE_RECIPE_FOR_ID,
-  payload: {
-    recipeId,
-  },
+  payload: recipeId,
 });
 
 const receiveRecipes = (recipes) => ({
@@ -36,11 +34,11 @@ const receiveRecipes = (recipes) => ({
 //   };
 
 export function fetchRecipeId(id) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(requestRecipes());
-    const recipeId = getRecipeForId(id);
-    console.log(recipeId);
-    return dispatch(receiveRecipeforId(recipeId));
+    const recipe = await getRecipeForId(id);
+    console.log(recipe);
+    return dispatch(receiveRecipeforId(recipe));
   };
 }
 
