@@ -9,6 +9,11 @@ function Profile({ history }) {
     setEmail(emailLocalStorage.email);
   };
 
+  const logoutButton = () => {
+    localStorage.removeItem('user');
+    history.push('/');
+  };
+
   useEffect(() => {
     getLocalStorageEmail();
   }, []);
@@ -34,6 +39,7 @@ function Profile({ history }) {
       <button
         data-testid="profile-logout-btn"
         type="button"
+        onClick={ logoutButton }
       >
         Logout
       </button>
