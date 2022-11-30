@@ -21,31 +21,19 @@ const receiveRecipes = (recipes) => ({
   payload: recipes,
 });
 
-// const fetchRecipeId = async (dispatch) => {
-//     try {
-//       dispatch(requestRecipes());
-//       const issLocation = await getCurrentIssLocation();
-//       const { latitude, longitude } = issLocation.iss_position;
-
-//       dispatch(receiveIssLocationSuccess(Number(latitude), Number(longitude)));
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-export function fetchRecipeId(id) {
+export function fetchRecipeId(url, id) {
   return async (dispatch) => {
     dispatch(requestRecipes());
-    const recipe = await getRecipeForId(id);
-    console.log(recipe);
-    return dispatch(receiveRecipeforId(recipe));
+    const recipeId = await getRecipeForId(url, id);
+    console.log(recipeId);
+    return dispatch(receiveRecipeforId(recipeId));
   };
 }
 
 export function fetchAllRecipes(url) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(requestRecipes());
-    const Recipes = getRecipes(url);
+    const Recipes = await getRecipes(url);
     return dispatch(receiveRecipes(Recipes));
   };
 }
