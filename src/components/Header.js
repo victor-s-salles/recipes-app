@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ pageName, history }) {
+function Header({ pageName }) {
   const [searchDisplay, setSearchDisplay] = useState(false);
+  const history = useHistory();
   return (
     <div>
       <h1 data-testid="page-title">
