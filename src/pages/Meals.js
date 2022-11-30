@@ -42,7 +42,9 @@ class Meals extends React.Component {
 
     this.setState({ selectedCategory: target.id });
 
-    if (target.id === selectedCategory) { dispatch(recipesMeals(comidas)); }
+    if (target.id === selectedCategory) {
+      dispatch(recipesMeals(comidas)); this.setState({ selectedCategory: '' });
+    }
   };
 
   mealsRender = () => {

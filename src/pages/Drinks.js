@@ -42,7 +42,9 @@ class Drinks extends React.Component {
 
     this.setState({ selectedCategory: target.id });
 
-    if (target.id === selectedCategory) { dispatch(recipesDrinks(bebidas)); }
+    if (target.id === selectedCategory) {
+      dispatch(recipesDrinks(bebidas)); this.setState({ selectedCategory: '' });
+    }
   };
 
   drinksRender = () => {
