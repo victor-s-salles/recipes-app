@@ -8,6 +8,8 @@ import Header from '../components/Header';
 class Meals extends React.Component {
   state = {
     categoriesMeals: [],
+    selectedCategory: '',
+    comidas: [],
   };
 
   async componentDidMount() {
@@ -18,42 +20,68 @@ class Meals extends React.Component {
     const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const mealsData = await responseMeals.json();
     const dozeMeals = mealsData.meals.slice(0, doze);
-    console.log(dozeMeals);
 
     const responseCategories = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const mealsCategoriesData = await responseCategories.json();
     const cincoCategoriesMeals = mealsCategoriesData.meals.slice(0, cinco);
-    console.log(cincoCategoriesMeals);
 
     dispatch(recipesMeals(dozeMeals));
 
     this.setState({
       categoriesMeals: cincoCategoriesMeals,
+      selectedCategory: '',
+      comidas: dozeMeals,
     });
   }
 
+  categorySelected = async ({ target }) => {
+    const { selectedCategory, comidas } = this.state;
+    const { dispatch } = this.props;
+    const doze = 12;
+
+    const selectedData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.id}`);
+    const categoryData = await selectedData.json();
+    const dozeCategories = categoryData.meals.slice(0, doze);
+    dispatch(recipesMeals(dozeCategories));
+
+    this.setState({ selectedCategory: target.id });
+
+    if (target.id === selectedCategory) {
+      dispatch(recipesMeals(comidas));
+      this.setState({ selectedCategory: '' });
+    }
+  };
+
   mealsRender = () => {
     const { categoriesMeals } = this.state;
-    const { meals } = this.props;
-    if (!meals) {
-      return (<h1>Loading</h1>);
-    }
+    const { mealsState } = this.props;
+
     return (
       <section>
+        <button
+          type="button"
+          onClick={ () => { this.componentDidMount(); } }
+          data-testid="All-category-filter"
+        >
+          All
+        </button>
         <Header pageName="Meals" />
         {categoriesMeals.map((ele, index2) => (
           <div key={ index2 }>
             <button
               type="button"
+              id={ ele.strCategory }
+              onClick={ this.categorySelected }
               data-testid={ `${ele.strCategory}-category-filter` }
             >
               { ele.strCategory }
             </button>
           </div>
         ))}
-        {comidas.map((ele, index) => (
+
+        {mealsState.map((ele, index) => (
           <Link to={ `/meals/${ele.idMeal}` } key={ index }>
-            <div data-testid={ `${index}-recipe-card` }>
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
               <img
                 src={ ele.strMealThumb }
                 alt=""
@@ -76,13 +104,12 @@ class Meals extends React.Component {
     );
   }
 }
-
 Meals.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  meals: state.recipes.meals,
+  mealsState: state.recipes.meals,
 });
 
 export default connect(mapStateToProps)(Meals);
