@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesMeals } from '../redux/actions';
-import store from '../redux/index';
 
 class Meals extends React.Component {
   state = {
