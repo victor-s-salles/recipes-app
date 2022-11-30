@@ -20,3 +20,6 @@ code {
   flex-direction: column;
   justify-content: center;
 }
+.card-recipe {
+  background-color: brown;
+}

@@ -47,6 +47,11 @@ class Drinks extends React.Component {
     }
   };
 
+  handleClick = () => {
+    const { history } = this.props;
+    history.push('/');
+  };
+
   drinksRender = () => {
     const { categoriesDrink } = this.state;
     const { drinkState } = this.props;
@@ -73,7 +78,13 @@ class Drinks extends React.Component {
           </div>
         ))}
         {drinkState.map((ele, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
+          <div
+            className="card-recipe"
+            key={ index }
+            data-testid={ `${index}-recipe-card` }
+            onClick={ () => { this.handleClick(); } }
+            aria-hidden="true"
+          >
             <img
               src={ ele.strDrinkThumb }
               alt={ `${ele.strDrink} imagem` }
