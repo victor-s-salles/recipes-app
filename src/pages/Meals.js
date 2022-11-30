@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { recipesMeals } from '../redux/actions';
+import Header from '../components/Header';
 
 class Meals extends React.Component {
   state = {
-    comidas: [],
     categoriesMeals: [],
   };
 
@@ -25,18 +25,22 @@ class Meals extends React.Component {
     const cincoCategoriesMeals = mealsCategoriesData.meals.slice(0, cinco);
     console.log(cincoCategoriesMeals);
 
-    dispatch(recipesMeals(cincoCategoriesMeals));
+    dispatch(recipesMeals(dozeMeals));
+
     this.setState({
-      comidas: dozeMeals,
       categoriesMeals: cincoCategoriesMeals,
     });
   }
 
   mealsRender = () => {
-    const { comidas, categoriesMeals } = this.state;
-
+    const { categoriesMeals } = this.state;
+    const { meals } = this.props;
+    if (!meals) {
+      return (<h1>Loading</h1>);
+    }
     return (
       <section>
+        <Header pageName="Meals" />
         {categoriesMeals.map((ele, index2) => (
           <div key={ index2 }>
             <button
@@ -67,7 +71,6 @@ class Meals extends React.Component {
   render() {
     return (
       <div>
-        <h1>MEALS</h1>
         {this.mealsRender()}
       </div>
     );
@@ -79,7 +82,7 @@ Meals.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  meals: state.meals,
+  meals: state.recipes.meals,
 });
 
 export default connect(mapStateToProps)(Meals);
