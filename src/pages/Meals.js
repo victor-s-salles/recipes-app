@@ -26,17 +26,21 @@ class Meals extends React.Component {
     this.setState({
       comidas: dozeMeals,
       categoriesMeals: cincoCategoriesMeals,
+      selectedCategory: '',
     });
   }
 
   categorySelected = async ({ target }) => {
+    const { selectedCategory } = this.state;
     const doze = 12;
 
     const selectedData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.id}`);
     const categoryData = await selectedData.json();
     const dozeCategories = categoryData.meals.slice(0, doze);
 
-    this.setState({ comidas: dozeCategories });
+    this.setState({ comidas: dozeCategories, selectedCategory: target.id });
+
+    if (target.id === selectedCategory) { this.componentDidMount(); }
   };
 
   mealsRender = () => {
