@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { recipesDrinks } from '../redux/actions';
+import Header from '../components/Header';
 
 class Drinks extends React.Component {
   state = {
@@ -61,6 +62,7 @@ class Drinks extends React.Component {
         >
           All
         </button>
+        <Header pageName="Drinks" />
         {categoriesDrink.map((ele, index2) => (
           <div key={ index2 }>
             <button
