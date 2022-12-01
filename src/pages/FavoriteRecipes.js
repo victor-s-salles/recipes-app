@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -24,6 +24,24 @@ function FavoriteRecipes() {
   //     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
   //   },
   // ];
+  // localStorage.setItem('favoriteRecipes', JSON.stringify(receitas));
+
+  const [favoritesList, setFavoritesList] = useState([]);
+  useEffect(() => {
+    const favoritesLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setFavoritesList(favoritesLocalStorage);
+  }, []);
+
+  const removeFavorite = (id) => {
+    console.log('REMOVEU', id);
+    const idsList = favoritesList.map((e) => (e.id));
+    const indexToRemove = idsList.indexOf(id);
+    const newFavoritesList = [...favoritesList];
+    newFavoritesList.splice(indexToRemove, 1);
+    setFavoritesList(newFavoritesList);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesList));
+    // Salvar no local storage-------
+  };
   return (
     <div>
       <Header pageName="Favorite Recipes" searchingOFF />
@@ -38,7 +56,7 @@ function FavoriteRecipes() {
         Drinks
       </button>
 
-      {receitas.map((e, index) => (
+      {favoritesList.map((e, index) => (
         <div key={ e.id }>
           <img
             src={ e.image }
@@ -70,6 +88,7 @@ function FavoriteRecipes() {
             src={ blackHeartIcon }
             type="button"
             data-testid={ `${index}-horizontal-favorite-btn` }
+            onClick={ () => { removeFavorite(e.id); } }
           >
             <img src={ blackHeartIcon } alt="Favorite button" />
           </button>
