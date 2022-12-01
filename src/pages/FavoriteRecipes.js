@@ -27,9 +27,11 @@ function FavoriteRecipes() {
   // localStorage.setItem('favoriteRecipes', JSON.stringify(receitas));
 
   const [favoritesList, setFavoritesList] = useState([]);
+  const [backupFavoritesList, setBackupFavoritesList] = useState([]);
   useEffect(() => {
     const favoritesLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     setFavoritesList(favoritesLocalStorage);
+    setBackupFavoritesList(favoritesLocalStorage);
   }, []);
 
   const removeFavorite = (id) => {
@@ -42,17 +44,41 @@ function FavoriteRecipes() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesList));
     // Salvar no local storage-------
   };
+
+  const filterMeals = () => {
+    const filtredArray = backupFavoritesList.filter((e) => e.type === 'meal');
+    setFavoritesList(filtredArray);
+  };
+  const filterDrinks = () => {
+    const filtredArray = backupFavoritesList.filter((e) => e.type === 'drink');
+    setFavoritesList(filtredArray);
+  };
+  const filterAll = () => {
+    setFavoritesList(backupFavoritesList);
+  };
   return (
     <div>
       <Header pageName="Favorite Recipes" searchingOFF />
       <h1>Lista de receitas favoritas</h1>
-      <button type="button" data-testid="filter-by-all-btn">
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ filterAll }
+      >
         All
       </button>
-      <button type="button" data-testid="filter-by-meal-btn">
+      <button
+        type="button"
+        data-testid="filter-by-meal-btn"
+        onClick={ filterMeals }
+      >
         Meals
       </button>
-      <button type="button" data-testid="filter-by-drink-btn">
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ filterDrinks }
+      >
         Drinks
       </button>
 
