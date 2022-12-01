@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchRecipeId } from '../redux/actions';
+import FavoriteButton from './FavoriteButton';
+import ShareButton from './ShareButton';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
@@ -20,11 +22,13 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
       getRecipe();
     }
   }, []);
-  console.log(pathname);
   return (
 
-    <h1>recipedetatils</h1>
-
+    <>
+      <h1>recipedetatils</h1>
+      <FavoriteButton />
+      <ShareButton />
+    </>
   );
 }
 
