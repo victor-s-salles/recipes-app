@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipeId } from '../redux/actions';
+import FavoriteButton from './FavoriteButton';
+import ShareButton from './ShareButton';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
@@ -51,9 +53,11 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   }, [data]);
 
   if (loading) { return <h1>Carregando...</h1>; }
-  console.log(data);
+
   return (
     <div>
+      <FavoriteButton />
+      <ShareButton />
       {!pathname.includes('drink') ? (
         <section>
           <img
@@ -104,7 +108,6 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
             </p>
           ))}
           <p data-testid="instructions">{recipe.drinks[0].strInstructions}</p>
-
         </section>
       )}
     </div>

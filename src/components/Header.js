@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ pageName }) {
+function Header({ pageName, searchingOFF }) {
   const [searchDisplay, setSearchDisplay] = useState(false);
   const history = useHistory();
   return (
@@ -16,7 +16,9 @@ function Header({ pageName }) {
       </h1>
       <button
         type="button"
-        onClick={ () => { history.push('/profile'); } }
+        onClick={ () => {
+          history.push('/profile');
+        } }
       >
         <img
           src={ profileIcon }
@@ -24,18 +26,23 @@ function Header({ pageName }) {
           alt="Ícone de Perfil"
         />
       </button>
-      <button
-        type="button"
-        onClick={ () => { setSearchDisplay(!searchDisplay); } }
-      >
-        <img
-          src={ searchIcon }
-          data-testid="search-top-btn"
-          alt="Ícone de Perfil de busca"
-        />
-      </button>
-      {searchDisplay && <SearchBar /> }
-
+      {!searchingOFF && (
+        <div>
+          <button
+            type="button"
+            onClick={ () => {
+              setSearchDisplay(!searchDisplay);
+            } }
+          >
+            <img
+              src={ searchIcon }
+              data-testid="search-top-btn"
+              alt="Ícone de Perfil de busca"
+            />
+          </button>
+          {searchDisplay && <SearchBar />}
+        </div>
+      )}
     </div>
   );
 }
@@ -45,6 +52,7 @@ Header.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  searchingOFF: PropTypes.bool.isRequired,
 };
 
 export default Header;

@@ -55,6 +55,7 @@ class Drinks extends React.Component {
 
     return (
       <section>
+        <Header pageName="Drinks" />
         <button
           type="button"
           onClick={ () => { this.componentDidMount(); } }
@@ -62,7 +63,7 @@ class Drinks extends React.Component {
         >
           All
         </button>
-        <Header pageName="Drinks" />
+
         {categoriesDrink.map((ele, index2) => (
           <div key={ index2 }>
             <button
@@ -101,7 +102,6 @@ class Drinks extends React.Component {
   render() {
     return (
       <div>
-        <h1>DRINKS</h1>
         {this.drinksRender()}
       </div>
     );

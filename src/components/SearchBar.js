@@ -18,7 +18,6 @@ function SearchBar() {
         if (FecthUrl) {
           const response = await fetch(FecthUrl);
           const dataJson = await response.json();
-          console.log(dataJson);
           if (!dataJson.drinks && !dataJson.meals) {
             global.alert('Sorry, we haven\'t found any recipes for these filters.');
           } else {
@@ -26,7 +25,6 @@ function SearchBar() {
           }
         }
       } catch (error) {
-        console.log(error);
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
     };
@@ -37,7 +35,6 @@ function SearchBar() {
     if (newRecipes) {
       if (location.pathname === '/meals') {
         if (newRecipes.meals.length === 1) {
-        //   console.log(newRecipes.meals[0].idMeal);
           history.push(`/meals/${newRecipes.meals[0].idMeal}`);
         }
         const doze = 12;
@@ -47,7 +44,6 @@ function SearchBar() {
 
       if (location.pathname === '/drinks') {
         if (newRecipes.drinks.length === 1) {
-        //   console.log(newRecipes.drinks[0].idDrink);
           history.push(`/drinks/${newRecipes.drinks[0].idDrink}`);
         }
         const doze = 12;
