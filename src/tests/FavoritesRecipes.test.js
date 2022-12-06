@@ -5,7 +5,6 @@ import { act } from 'react-dom/test-utils';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import App from '../App';
 import mockDataMeals from './helpers/mocks/mockDataMeals';
-import mockDataDrinks from './helpers/mocks/mockDataDrinks';
 
 const recipes = [
   {
@@ -28,6 +27,8 @@ const recipes = [
   },
 ];
 
+const favoritesRecipesUrl = '/favorite-recipes';
+
 describe('Testa pagina de receitas favoritas', () => {
   it('Testa se a pagina é carregada corretamente', async () => {
     jest.spyOn(global, 'fetch');
@@ -40,7 +41,7 @@ describe('Testa pagina de receitas favoritas', () => {
     expect(history.location.pathname).toBe('/meals');
 
     act(() => {
-      history.push('favorite-recipes');
+      history.push(favoritesRecipesUrl);
     });
     const title = screen.getByTestId('page-title');
     expect(title.innerHTML).toBe('Favorite Recipes ');
@@ -58,13 +59,13 @@ describe('Testa pagina de receitas favoritas', () => {
 
     act(() => {
       localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
-      history.push('favorite-recipes');
+      history.push(favoritesRecipesUrl);
     });
 
-    const recipeOneTitle = screen.getByText('Spicy Arrabiata Penne');
+    const recipeOneTitle = screen.getByText(recipes[0].name);
     expect(recipeOneTitle).toBeInTheDocument();
 
-    const recipeTwoTitle = screen.getByText('Aquamarine');
+    const recipeTwoTitle = screen.getByText(recipes[1].name);
     expect(recipeTwoTitle).toBeInTheDocument();
 
     const shareBtnOne = screen.getByTestId('0-horizontal-share-btn');
@@ -90,17 +91,17 @@ describe('Testa pagina de receitas favoritas', () => {
 
     act(() => {
       localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
-      history.push('favorite-recipes');
+      history.push(favoritesRecipesUrl);
     });
 
     const allBtn = screen.getByTestId('filter-by-all-btn');
     const mealsBtn = screen.getByTestId('filter-by-meal-btn');
     const drinksBtn = screen.getByTestId('filter-by-drink-btn');
 
-    const recipeMealTitle = screen.getByText('Spicy Arrabiata Penne');
+    const recipeMealTitle = screen.getByText(recipes[0].name);
     expect(recipeMealTitle).toBeInTheDocument();
 
-    const recipeDrinkTitle = screen.getByText('Aquamarine');
+    const recipeDrinkTitle = screen.getByText(recipes[1].name);
     expect(recipeDrinkTitle).toBeInTheDocument();
 
     expect(allBtn).toBeInTheDocument();
@@ -118,10 +119,10 @@ describe('Testa pagina de receitas favoritas', () => {
 
     userEvent.click(allBtn);
 
-    const recipeMealTitleBackup = screen.getByText('Spicy Arrabiata Penne');
+    const recipeMealTitleBackup = screen.getByText(recipes[0].name);
     expect(recipeMealTitleBackup).toBeInTheDocument();
 
-    const recipeDrinkTitleBackup = screen.getByText('Aquamarine');
+    const recipeDrinkTitleBackup = screen.getByText(recipes[1].name);
     expect(recipeDrinkTitleBackup).toBeInTheDocument();
   });
 });
