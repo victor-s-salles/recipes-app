@@ -16,7 +16,7 @@ function FavoriteButton() {
       return false;
     }
     return favoriteRecipesData
-      .some((favoriteRecipe) => favoriteRecipe.id === actualRecipeId);
+      .some((favoriteRecipe) => favoriteRecipe.id === actualRecipeId); // corrigir retorno true na inicialização
   };
 
   const [filled, setFilled] = useState(favoriteRecipeCheck());
@@ -57,8 +57,8 @@ function FavoriteButton() {
   };
 
   const removeRecipeInLocalStorage = (recipe) => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    favoriteRecipes.splice(recipe);
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'))
+      .filter((favoriteRecipe) => favoriteRecipe.id !== recipe.id);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
