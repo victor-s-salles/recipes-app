@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecipeId } from '../redux/actions';
+import { fetchRecipeId, fetchAllRecipes } from '../redux/actions';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
 
@@ -11,17 +11,22 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const loading = useSelector((state) => state.recipes.IsLoading);
   const [ingredients, setingredients] = useState([]);
   const [data, setData] = useState({});
+
   useEffect(() => {
     if (pathname.includes('drink')) {
-      const url = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+      const urlId = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const getRecipe = async () => {
-        dispatch(fetchRecipeId(url, id));
+        dispatch(fetchRecipeId(urlId, id));
+        dispatch(fetchAllRecipes(url));
       };
       getRecipe();
     } else {
-      const url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+      const urlId = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const getRecipe = async () => {
-        dispatch(fetchRecipeId(url, id));
+        dispatch(fetchRecipeId(urlId, id));
+        dispatch(fetchAllRecipes(url));
       };
       getRecipe();
     }
