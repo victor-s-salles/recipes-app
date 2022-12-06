@@ -86,15 +86,6 @@ function DoneRecipes() {
               {recipe.tag[1]}
             </h2>)
             : null }
-          {/* <button
-            type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-          >
-            <img
-            src={shareIcon}
-            alt='botão compartilhar'>
-
-          </button> */}
 
         </div>
 
@@ -103,3 +94,13 @@ function DoneRecipes() {
   );
 }
 export default DoneRecipes;
+
+/* <button
+            type="button"
+            data-testid={ `${index}-horizontal-share-btn` }
+          >
+            <img
+            src={shareIcon}
+            alt='botão compartilhar'>
+
+          </button> */
