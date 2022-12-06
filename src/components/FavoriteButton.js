@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import UnfilledIcon from '../images/whiteHeartIcon.svg';
+import filledIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteButton() {
   const actualRecipe = useSelector((state) => state.recipes.recipesForId);
+
+  const favoriteRecipeCheck = () => {
+    const favoriteRecipesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const actualRecipeIdName = Object
+      .keys(actualRecipe[Object.keys(actualRecipe)[0]][0])[0];
+    const actualRecipeId = actualRecipe[Object
+      .keys(actualRecipe)[0]][0][actualRecipeIdName];
+    if (!favoriteRecipesData) {
+      return false;
+    }
+    return favoriteRecipesData
+      .some((favoriteRecipe) => favoriteRecipe.id === actualRecipeId);
+  };
+
+  const [filled, setFilled] = useState(favoriteRecipeCheck());
 
   const formateRecipeData = () => {
     if (actualRecipe.meals) {
@@ -39,9 +56,21 @@ function FavoriteButton() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
+  const removeRecipeInLocalStorage = (recipe) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    favoriteRecipes.splice(recipe);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  };
+
   const onFavoriteButtonClick = () => {
     const recipeData = formateRecipeData();
-    addRecipeInLocalStorage(recipeData);
+    if (!filled) {
+      addRecipeInLocalStorage(recipeData);
+    }
+    if (filled) {
+      removeRecipeInLocalStorage(recipeData);
+    }
+    setFilled(!filled);
   };
 
   return (
@@ -50,7 +79,11 @@ function FavoriteButton() {
       data-testid="favorite-btn"
       onClick={ onFavoriteButtonClick }
     >
-      Favorite
+      <img
+        alt="favorite-icon"
+        src={ (filled) ? filledIcon : UnfilledIcon }
+        width="25px"
+      />
     </button>
   );
 }

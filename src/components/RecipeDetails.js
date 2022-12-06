@@ -53,8 +53,6 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
       }
       setingredients(allIngredients);
     });
-    console.log(keys);
-    console.log(allIngredients);
   }, [data]);
 
   if (loading) { return <h1>Carregando...</h1>; }
