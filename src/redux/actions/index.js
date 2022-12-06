@@ -25,7 +25,6 @@ export function fetchRecipeId(url, id) {
   return async (dispatch) => {
     dispatch(requestRecipes());
     const recipeId = await getRecipeForId(url, id);
-    console.log(recipeId);
     return dispatch(receiveRecipeforId(recipeId));
   };
 }
