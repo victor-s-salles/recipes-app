@@ -18,9 +18,10 @@ function FavoriteRecipes() {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
       setFavoritesList([]);
       setBackupFavoritesList([]);
+    } else {
+      setFavoritesList(favoritesLocalStorage);
+      setBackupFavoritesList(favoritesLocalStorage);
     }
-    setFavoritesList(favoritesLocalStorage);
-    setBackupFavoritesList(favoritesLocalStorage);
   }, []);
 
   const removeFavorite = (id) => {
