@@ -20,19 +20,15 @@ describe('Testa página de Login', () => {
     renderWithRouterAndRedux(<App />);
     const email = screen.queryByTestId(emailTestId);
     const password = screen.queryByTestId(passwordTestId);
-    let loginButton = screen.queryByRole('button', { name: 'Login' });
+    const loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).toBeDisabled();
     userEvent.type(email, 'teste');
-    loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).toBeDisabled();
     userEvent.type(email, '@teste.com');
-    loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).toBeDisabled();
     userEvent.type(password, '12345');
-    loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).toBeDisabled();
     userEvent.type(password, '67');
-    loginButton = screen.queryByRole('button', { name: 'Login' });
     expect(loginButton).not.toBeDisabled();
   });
   test('Testa se o usuário é encaminhado para página /meals depois de efetuar o login', () => {

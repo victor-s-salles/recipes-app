@@ -9,6 +9,7 @@ class Drinks extends React.Component {
   state = {
     bebidas: [],
     categoriesDrink: [],
+    selectedCategory: '',
   };
 
   async componentDidMount() {
@@ -47,6 +48,7 @@ class Drinks extends React.Component {
     if (target.id === selectedCategory) {
       dispatch(recipesDrinks(bebidas)); this.setState({ selectedCategory: '' });
     }
+    console.log(target.id);
   };
 
   drinksRender = () => {
