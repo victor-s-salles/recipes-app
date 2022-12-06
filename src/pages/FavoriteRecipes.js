@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+import ShareButtonFavorites from '../components/ShareButtonFavorites';
 
 function FavoriteRecipes() {
   const receitas = [
     {
-      id: '1234',
-      type: 'meal',
+      id: '52977',
+      type: 'meals',
       nationality: 'Italian',
       category: 'Vegetarian',
       alcoholicOrNot: '',
@@ -17,11 +18,11 @@ function FavoriteRecipes() {
     },
     {
       id: '1000',
-      type: 'drink',
+      type: 'drinks',
       nationality: 'brasil',
       category: 'cate',
-      alcoholicOrNot: 'Yes',
-      name: 'frango',
+      alcoholicOrNot: 'Alcoholic',
+      name: 'Aquamarine',
       image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
     },
   ];
@@ -49,11 +50,11 @@ function FavoriteRecipes() {
   };
 
   const filterMeals = () => {
-    const filtredArray = backupFavoritesList.filter((e) => e.type === 'meal');
+    const filtredArray = backupFavoritesList.filter((e) => e.type === 'meals');
     setFavoritesList(filtredArray);
   };
   const filterDrinks = () => {
-    const filtredArray = backupFavoritesList.filter((e) => e.type === 'drink');
+    const filtredArray = backupFavoritesList.filter((e) => e.type === 'drinks');
     setFavoritesList(filtredArray);
   };
   const filterAll = () => {
@@ -98,7 +99,7 @@ function FavoriteRecipes() {
           <Link to={ `/drinks/${e.id}` }>
             <p data-testid={ `${index}-horizontal-name` }>{e.name}</p>
           </Link>
-          {e.type === 'meal' && (
+          {e.type === 'meals' && (
             <p data-testid={ `${index}-horizontal-top-text` }>
               {`${e.nationality} - ${e.category}`}
             </p>
@@ -106,16 +107,11 @@ function FavoriteRecipes() {
           <p data-testid={ `${index}-horizontal-done-date` }>
             DATA QUE A RECEITA FOI FEITA
           </p>
-          {e.type === 'drink' && (
+          {e.type === 'drinks' && (
             <p data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</p>
           )}
-          <button
-            src={ shareIcon }
-            type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-          >
-            <img src={ shareIcon } alt="Share button" />
-          </button>
+          <ShareButtonFavorites index={ index } id={ e.id } type={ e.type } />
+
           <p data-testid={ `${index}-${e.type}-horizontal-tag` }>{e.type}</p>
           <button
             src={ blackHeartIcon }

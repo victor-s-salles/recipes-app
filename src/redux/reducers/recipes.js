@@ -6,7 +6,7 @@ import { RECEIVE_RECIPES,
 } from '../actions';
 
 const INITIAL_STATE = {
-  IsFething: false,
+  IsLoading: true,
   recipesForId: {},
   allRecipes: [],
   drinks: [],
@@ -18,31 +18,33 @@ const recipes = (state = INITIAL_STATE, action) => {
   case REQUEST_RECIPES: {
     return {
       ...state,
-      IsFething: true,
+      IsLoading: true,
     };
   }
   case RECEIVE_RECIPE_FOR_ID: {
     return {
       ...state,
-      IsFething: false,
+      IsLoading: false,
       recipesForId: action.payload,
     };
   }
   case RECEIVE_RECIPES: {
     return {
       ...state,
-      IsFething: false,
+      IsLoading: false,
       allRecipes: action.payload,
     };
   }
   case MEALS:
     return ({
       ...state,
+      IsLoading: true,
       meals: action.meals,
     });
   case DRINKS:
     return ({
       ...state,
+      IsLoading: true,
       drinks: action.drinks,
     });
   default:
