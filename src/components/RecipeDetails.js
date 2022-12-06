@@ -23,7 +23,6 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     }
   }, []);
   return (
-
     <>
       <h1>recipedetatils</h1>
       <FavoriteButton />
