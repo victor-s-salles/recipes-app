@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import '../styles/RecommendationCard.css';
 
 function RecommendationCard() {
   const recommendation = useSelector((state) => state.recipes.allRecipes);
@@ -32,25 +33,35 @@ function RecommendationCard() {
   return (
     <>
       <h1>Recomendações</h1>
-      <p>{type}</p>
-      {type === 'drinks' ? (
-        <section>
-          {data.map((element, i) => (
-            <div data-testid={ `${i}-recommendation-card` } key={ element.idDrink }>
-              <img src={ element.strDrinkThumb } alt={ element.strCategory } />
-              <p data-testid={ `${i}-recommendation-title` }>{element.strDrink}</p>
-            </div>
-          ))}
-        </section>
-      ) : (
-        <section>
-          {data.map((element, i) => (
-            <div data-testid={ `${i}-recommendation-card` } key={ element.idMeal }>
-              <img src={ element.strMealThumb } alt={ element.strCategory } />
-              <p data-testid={ `${i}-recommendation-title` }>{element.strMeal}</p>
-            </div>
-          ))}
-        </section>)}
+      <div className="container-recommendation">
+        <div className="container-wrapper">
+          {type === 'drinks' ? (
+            <section className="gallery">
+              {data.map((element, i) => (
+                <div
+                  data-testid={ `${i}-recommendation-card` }
+                  key={ element.idDrink }
+                >
+                  <img src={ element.strDrinkThumb } alt={ element.strCategory } />
+                  <p data-testid={ `${i}-recommendation-title` }>{element.strDrink}</p>
+                </div>
+              ))}
+            </section>
+          ) : (
+            <section className="gallery">
+              {data.map((element, i) => (
+                <div
+                  data-testid={ `${i}-recommendation-card` }
+                  key={ element.idMeal }
+
+                >
+                  <img src={ element.strMealThumb } alt={ element.strCategory } />
+                  <p data-testid={ `${i}-recommendation-title` }>{element.strMeal}</p>
+                </div>
+              ))}
+            </section>)}
+        </div>
+      </div>
     </>
   );
 }

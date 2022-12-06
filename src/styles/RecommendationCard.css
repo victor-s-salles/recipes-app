@@ -1,0 +1,28 @@
+/* referenia: https://www.youtube.com/watch?v=QAD0K112tlQ&ab_channel=Ot%C3%A1vioMiranda */
+
+.container-recommendation {
+  position: relative;
+  max-width: 640px;
+  border: 1px solid #ccc;
+}
+
+.container-wrapper {
+    box-sizing: border-box;
+    background: #242121;
+    border: 0.517989px solid #B1B1B1;
+    border-radius: 5px;
+    overflow-x: scroll;
+}
+
+.gallery{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 15px;
+    width: 310px;
+    height: 300px; 
+}
+
+.gallery img {
+    width:280px;
+    height: 250px; 
+}
