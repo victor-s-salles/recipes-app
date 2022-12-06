@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipeId, fetchAllRecipes } from '../redux/actions';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
+import RecommendationCard from './RecommendationCard';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
@@ -53,8 +54,6 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
       }
       setingredients(allIngredients);
     });
-    console.log(keys);
-    console.log(allIngredients);
   }, [data]);
 
   if (loading) { return <h1>Carregando...</h1>; }
@@ -115,6 +114,9 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           <p data-testid="instructions">{recipe.drinks[0].strInstructions}</p>
         </section>
       )}
+      <section>
+        <RecommendationCard />
+      </section>
     </div>
   );
 }
