@@ -6,26 +6,6 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ShareButtonFavorites from '../components/ShareButtonFavorites';
 
 function FavoriteRecipes() {
-  // const receitas = [
-  //   {
-  //     id: '52977',
-  //     type: 'meals',
-  //     nationality: 'Italian',
-  //     category: 'Vegetarian',
-  //     alcoholicOrNot: '',
-  //     name: 'Spicy Arrabiata Penne',
-  //     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  //   },
-  //   {
-  //     id: '1000',
-  //     type: 'drinks',
-  //     nationality: 'brasil',
-  //     category: 'cate',
-  //     alcoholicOrNot: 'Alcoholic',
-  //     name: 'Aquamarine',
-  //     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  //   },
-  // ];
   // localStorage.setItem('favoriteRecipes', JSON.stringify(receitas));
 
   // EMULAÇÃO DO LOCAL STORAGE
@@ -34,6 +14,11 @@ function FavoriteRecipes() {
   const [backupFavoritesList, setBackupFavoritesList] = useState([]);
   useEffect(() => {
     const favoritesLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!favoritesLocalStorage) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      setFavoritesList([]);
+      setBackupFavoritesList([]);
+    }
     setFavoritesList(favoritesLocalStorage);
     setBackupFavoritesList(favoritesLocalStorage);
   }, []);
