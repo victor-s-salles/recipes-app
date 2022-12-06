@@ -9,19 +9,20 @@ function Profile({ history }) {
   const getLocalStorageEmail = () => {
     const emailLocalStorage = JSON.parse(localStorage.getItem('user'));
     if (!emailLocalStorage) {
-      setEmail('Configure seu email!!');
+      // history.push('/');
     } else {
       setEmail(emailLocalStorage.email);
     }
   };
 
   const logoutButton = () => {
-    localStorage.removeItem('user');
+    localStorage.clear();
     history.push('/');
   };
 
   useEffect(() => {
     getLocalStorageEmail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -31,6 +32,7 @@ function Profile({ history }) {
       <button
         data-testid="profile-done-btn"
         type="button"
+        src="aas"
         onClick={ () => history.push('/done-recipes') }
       >
         Done Recipes

@@ -1,5 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import FavoriteButton from './FavoriteButton';
+import ShareButton from './ShareButton';
+import store from '../redux/index';
 
 function RecipeInProgress() {
   const drinksID = useSelector((state) => state.recipes.recipesForId.drinks);
@@ -13,11 +16,16 @@ function RecipeInProgress() {
     } else { target.parentNode.style.textDecorationLine = 'none'; }
   };
 
+  console.log(drinksID, mealsID);
+  console.log(store.getState());
+
   return (
     <div>
       <h1>Recipe In Progress</h1>
       {drinksID ? (
         <div>
+          <FavoriteButton />
+          <ShareButton />
           <p>DRINKS</p>
           <img
             data-testid="recipe-photo"
@@ -25,21 +33,6 @@ function RecipeInProgress() {
             alt={ drinksID[0].strDrink }
           />
           <p data-testid="recipe-title">{ drinksID[0].strDrink }</p>
-          <button
-            onClick={ handleChecked }
-            data-testid="share-btn"
-            type="button"
-          >
-            BUTTON
-            {/* BOTAO DE COMPARTILHAR */}
-          </button>
-          <button
-            data-testid="favorite-btn"
-            type="button"
-          >
-            BUTTON
-            {/* BOTAO DE FAVORITAR */}
-          </button>
           <p data-testid="recipe-category">{ drinksID[0].strCategory }</p>
           <p data-testid="instructions">{ drinksID[0].strInstructions }</p>
           <button
@@ -71,23 +64,11 @@ function RecipeInProgress() {
       ) : null}
       {mealsID ? (
         <div>
+          <FavoriteButton />
+          <ShareButton />
           <p>MEALS</p>
           <img data-testid="recipe-photo" src={ mealsID[0].strMealThumb } alt="" />
           <p data-testid="recipe-title">{ mealsID[0].strArea }</p>
-          <button
-            data-testid="share-btn"
-            type="button"
-          >
-            BUTTON
-            {/* BOTAO DE COMPARTILHAR */}
-          </button>
-          <button
-            data-testid="favorite-btn"
-            type="button"
-          >
-            BUTTON
-            {/* BOTAO DE FAVORITAR */}
-          </button>
           <p data-testid="recipe-category">{ mealsID[0].strCategory }</p>
           <p data-testid="instructions">{ mealsID[0].strInstructions }</p>
           <button
