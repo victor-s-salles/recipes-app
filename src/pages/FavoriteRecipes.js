@@ -6,27 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ShareButtonFavorites from '../components/ShareButtonFavorites';
 
 function FavoriteRecipes() {
-  const receitas = [
-    {
-      id: '52977',
-      type: 'meals',
-      nationality: 'Italian',
-      category: 'Vegetarian',
-      alcoholicOrNot: '',
-      name: 'Spicy Arrabiata Penne',
-      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    },
-    {
-      id: '1000',
-      type: 'drinks',
-      nationality: 'brasil',
-      category: 'cate',
-      alcoholicOrNot: 'Alcoholic',
-      name: 'Aquamarine',
-      image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-    },
-  ];
-  localStorage.setItem('favoriteRecipes', JSON.stringify(receitas));
+  // localStorage.setItem('favoriteRecipes', JSON.stringify(receitas));
 
   // EMULAÇÃO DO LOCAL STORAGE
 
@@ -34,8 +14,14 @@ function FavoriteRecipes() {
   const [backupFavoritesList, setBackupFavoritesList] = useState([]);
   useEffect(() => {
     const favoritesLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    setFavoritesList(favoritesLocalStorage);
-    setBackupFavoritesList(favoritesLocalStorage);
+    if (!favoritesLocalStorage) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      setFavoritesList([]);
+      setBackupFavoritesList([]);
+    } else {
+      setFavoritesList(favoritesLocalStorage);
+      setBackupFavoritesList(favoritesLocalStorage);
+    }
   }, []);
 
   const removeFavorite = (id) => {
@@ -50,11 +36,11 @@ function FavoriteRecipes() {
   };
 
   const filterMeals = () => {
-    const filtredArray = backupFavoritesList.filter((e) => e.type === 'meals');
+    const filtredArray = backupFavoritesList.filter((e) => e.type === 'meal');
     setFavoritesList(filtredArray);
   };
   const filterDrinks = () => {
-    const filtredArray = backupFavoritesList.filter((e) => e.type === 'drinks');
+    const filtredArray = backupFavoritesList.filter((e) => e.type === 'drink');
     setFavoritesList(filtredArray);
   };
   const filterAll = () => {
@@ -88,18 +74,18 @@ function FavoriteRecipes() {
 
       {favoritesList.map((e, index) => (
         <div key={ e.id }>
-          <Link to={ `/drinks/${e.id}` }>
+          <Link to={ e.type === 'drink' ? `/drinks/${e.id}` : `/meals/${e.id}` }>
             <img
               src={ e.image }
               alt={ e.name }
               data-testid={ `${index}-horizontal-image` }
+              width="200px"
             />
-
           </Link>
-          <Link to={ `/drinks/${e.id}` }>
+          <Link to={ e.type === 'drink' ? `/drinks/${e.id}` : `/meals/${e.id}` }>
             <p data-testid={ `${index}-horizontal-name` }>{e.name}</p>
           </Link>
-          {e.type === 'meals' && (
+          {e.type === 'meal' && (
             <p data-testid={ `${index}-horizontal-top-text` }>
               {`${e.nationality} - ${e.category}`}
             </p>
@@ -107,10 +93,14 @@ function FavoriteRecipes() {
           <p data-testid={ `${index}-horizontal-done-date` }>
             DATA QUE A RECEITA FOI FEITA
           </p>
-          {e.type === 'drinks' && (
+          {e.type === 'drink' && (
             <p data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</p>
           )}
-          <ShareButtonFavorites index={ index } id={ e.id } type={ e.type } />
+          <ShareButtonFavorites
+            index={ index }
+            id={ e.id }
+            type={ e.type === 'drink' ? 'drinks' : 'meals' }
+          />
 
           <p data-testid={ `${index}-${e.type}-horizontal-tag` }>{e.type}</p>
           <button
