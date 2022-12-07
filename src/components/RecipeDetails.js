@@ -82,7 +82,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
             data-testid="video"
             width="560"
             height="315"
-            src={ recipe.meals[0].strYoutube }
+            src={ recipe.meals[0].strYoutube.replace('watch?v=', 'embed/') }
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer;
