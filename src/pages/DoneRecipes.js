@@ -8,7 +8,7 @@ function DoneRecipes() {
   const [actualRecipe, setActualRecipe] = useState('');
 
   useEffect(() => {
-    const doneRecipes = localStorage.getItem('doneRecipes');
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     switch (recipeType) {
     case 'all':
       setActualRecipe(doneRecipes);
