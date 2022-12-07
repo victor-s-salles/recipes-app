@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
-import { receiveRecipes } from '../redux/actions/index';
+import { receiveRecipeforId } from '../redux/actions/index';
 
 function RecipeInProgress() {
   const [drinksID, setDataDrinks] = useState();
   const [mealsID, setDataMeals] = useState();
+  const dispatch = useDispatch();
   console.log(drinksID);
 
   const handleChecked = ({ target }) => {
@@ -19,23 +20,21 @@ function RecipeInProgress() {
 
   useEffect(() => {
     const x = window.location.pathname;
-    const teste = x.slice(7, 12);
-    console.log(x.slice(7, 12));
-    const sete = 7; const doze = 12; const treze = 13; const oito = 8;
+    const sete = 7; const doze = 12;
+    const recipeID = x.slice(sete, doze);
     if (x.includes('meals')) {
-      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${teste}`)
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`)
         .then((response) => response.json())
         .then((fetchComida) => {
           setDataMeals(fetchComida.meals[0]);
-          dispatch(receiveRecipes(fetchComida.meals));
+          dispatch(receiveRecipeforId(fetchComida));
         });
     } else {
       fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json())
         .then((fetchBebida) => {
-          const dataBebida = [fetchBebida][0].drinks
-            .filter((ele) => ele.idDrink === x.slice(oito, treze));
-          setDataDrinks(dataBebida[0]);
+          setDataDrinks(fetchBebida.drinks[0]);
+          dispatch(receiveRecipeforId(fetchBebida));
         });
     }
   }, []);
