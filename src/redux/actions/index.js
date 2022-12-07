@@ -16,7 +16,7 @@ const receiveRecipeforId = (recipeId) => ({
   payload: recipeId,
 });
 
-const receiveRecipes = (recipes) => ({
+export const receiveRecipes = (recipes) => ({
   type: RECEIVE_RECIPES,
   payload: recipes,
 });
