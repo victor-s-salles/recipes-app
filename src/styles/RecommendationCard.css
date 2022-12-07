@@ -2,8 +2,9 @@
 
 .container-recommendation {
   position: relative;
-  max-width: 640px;
+  max-width: 360px;
   border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .container-wrapper {
@@ -18,11 +19,12 @@
     display: flex;
     flex-flow: row nowrap;
     gap: 15px;
-    width: 310px;
-    height: 300px; 
+    width: 200px;
+    height: 270px; 
 }
 
 .gallery img {
-    width:280px;
-    height: 250px; 
+    width: 170px;
+    height: 200px; 
+    border-radius: 5px;
 }
