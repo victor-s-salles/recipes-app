@@ -8,7 +8,6 @@ function RecipeInProgress() {
   const [drinksID, setDataDrinks] = useState();
   const [mealsID, setDataMeals] = useState();
   const dispatch = useDispatch();
-  console.log(drinksID);
 
   const handleChecked = ({ target }) => {
     if (target.checked) {
@@ -29,18 +28,15 @@ function RecipeInProgress() {
           dispatch(receiveRecipeforId(fetchComida));
         });
     } else if (x.includes('drinks')) {
-      console.log(recipeID);
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeID[2]}`)
         .then((response) => response.json())
         .then((fetchBebida) => {
-          console.log(fetchBebida);
           setDataDrinks(fetchBebida.drinks[0]);
           dispatch(receiveRecipeforId(fetchBebida));
         });
     }
   }, []);
 
-  if (drinksID) { console.log(true); }
   return (
     <div>
       <h1>Recipe In Progress</h1>
