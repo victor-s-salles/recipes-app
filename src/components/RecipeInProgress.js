@@ -1,12 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
-import store from '../redux/index';
+import { receiveRecipeforId } from '../redux/actions/index';
 
 function RecipeInProgress() {
-  const drinksID = useSelector((state) => state.recipes.recipesForId.drinks);
-  const mealsID = useSelector((state) => state.recipes.recipesForId.meals);
+  const [drinksID, setDataDrinks] = useState();
+  const [mealsID, setDataMeals] = useState();
+  const dispatch = useDispatch();
+  console.log(drinksID);
 
   const handleChecked = ({ target }) => {
     if (target.checked) {
@@ -16,9 +18,29 @@ function RecipeInProgress() {
     } else { target.parentNode.style.textDecorationLine = 'none'; }
   };
 
-  console.log(drinksID, mealsID);
-  console.log(store.getState());
+  useEffect(() => {
+    const x = window.location.pathname;
+    const recipeID = x.split('/');
+    if (x.includes('meals')) {
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID[2]}`)
+        .then((response) => response.json())
+        .then((fetchComida) => {
+          setDataMeals(fetchComida.meals[0]);
+          dispatch(receiveRecipeforId(fetchComida));
+        });
+    } else if (x.includes('drinks')) {
+      console.log(recipeID);
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeID[2]}`)
+        .then((response) => response.json())
+        .then((fetchBebida) => {
+          console.log(fetchBebida);
+          setDataDrinks(fetchBebida.drinks[0]);
+          dispatch(receiveRecipeforId(fetchBebida));
+        });
+    }
+  }, []);
 
+  if (drinksID) { console.log(true); }
   return (
     <div>
       <h1>Recipe In Progress</h1>
@@ -29,12 +51,12 @@ function RecipeInProgress() {
           <p>DRINKS</p>
           <img
             data-testid="recipe-photo"
-            src={ drinksID[0].strDrinkThumb }
-            alt={ drinksID[0].strDrink }
+            src={ drinksID.strDrinkThumb }
+            alt={ drinksID.strDrink }
           />
-          <p data-testid="recipe-title">{ drinksID[0].strDrink }</p>
-          <p data-testid="recipe-category">{ drinksID[0].strCategory }</p>
-          <p data-testid="instructions">{ drinksID[0].strInstructions }</p>
+          <p data-testid="recipe-title">{ drinksID.strDrink }</p>
+          <p data-testid="recipe-category">{ drinksID.strCategory }</p>
+          <p data-testid="instructions">{ drinksID.strInstructions }</p>
           <button
             data-testid="finish-recipe-btn"
             type="button"
@@ -43,7 +65,7 @@ function RecipeInProgress() {
             {/* BOTAO DE FINALIZAR */}
           </button>
           <p>Ingredients</p>
-          {Object.entries(drinksID[0]).filter((ele) => ele[0]
+          {Object.entries(drinksID).filter((ele) => ele[0]
             .includes('strIngredient') && ele[1]).map((ele) => ele[1])
             .map((ele2Ingredient, indexDrinks) => (
               <div key={ indexDrinks }>
@@ -67,10 +89,14 @@ function RecipeInProgress() {
           <FavoriteButton />
           <ShareButton />
           <p>MEALS</p>
-          <img data-testid="recipe-photo" src={ mealsID[0].strMealThumb } alt="" />
-          <p data-testid="recipe-title">{ mealsID[0].strArea }</p>
-          <p data-testid="recipe-category">{ mealsID[0].strCategory }</p>
-          <p data-testid="instructions">{ mealsID[0].strInstructions }</p>
+          <img
+            data-testid="recipe-photo"
+            src={ mealsID.strMealThumb }
+            alt=""
+          />
+          <p data-testid="recipe-title">{ mealsID.strArea }</p>
+          <p data-testid="recipe-category">{ mealsID.strCategory }</p>
+          <p data-testid="instructions">{ mealsID.strInstructions }</p>
           <button
             data-testid="finish-recipe-btn"
             type="button"
@@ -79,7 +105,7 @@ function RecipeInProgress() {
             {/* BOTAO DE FINALIZAR */}
           </button>
           <p>Ingredients</p>
-          {Object.entries(mealsID[0]).filter((ele) => ele[0]
+          {Object.entries(mealsID).filter((ele) => ele[0]
             .includes('strIngredient') && ele[1]).map((ele) => ele[1])
             .map((ele2Ingredient, indexMeals) => (
               <div key={ indexMeals }>

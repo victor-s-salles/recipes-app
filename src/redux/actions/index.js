@@ -11,12 +11,12 @@ const requestRecipes = () => ({
   type: REQUEST_RECIPES,
 });
 
-const receiveRecipeforId = (recipeId) => ({
+export const receiveRecipeforId = (recipeId) => ({
   type: RECEIVE_RECIPE_FOR_ID,
   payload: recipeId,
 });
 
-const receiveRecipes = (recipes) => ({
+export const receiveRecipes = (recipes) => ({
   type: RECEIVE_RECIPES,
   payload: recipes,
 });
