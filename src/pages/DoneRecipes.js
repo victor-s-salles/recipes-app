@@ -47,7 +47,7 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      {actualRecipe.map((recipe, index) => (
+      {actualRecipe && actualRecipe.map((recipe, index) => (
         <div key={ index }>
           <Link to={ `/drinks/${recipe.id}` }>
             <img
