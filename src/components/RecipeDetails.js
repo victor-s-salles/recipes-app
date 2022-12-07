@@ -13,6 +13,16 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const loading = useSelector((state) => state.recipes.IsLoading);
   const [ingredients, setingredients] = useState([]);
   const [data, setData] = useState({});
+  const [completeRecipe, setCompleteRecipe] = useState(false);
+
+  useEffect(() => {
+    const doneRecipes = JSON.parse(localStorage.getItem('myData'));
+    doneRecipes.forEach((item) => {
+      if (item.id === id) {
+        setCompleteRecipe(true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (pathname.includes('drink')) {
@@ -119,17 +129,19 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           <p data-testid="instructions">{recipe.drinks[0].strInstructions}</p>
         </section>
       )}
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        onClick={ startRecipe }
-        style={ {
-          position: 'fixed',
-          bottom: 0,
-        } }
-      >
-        Start Recipe
-      </button>
+      {completeRecipe ? (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ startRecipe }
+          style={ {
+            position: 'fixed',
+            bottom: 0,
+          } }
+        >
+          Start Recipe
+        </button>) : null}
+
     </div>
   );
 }
