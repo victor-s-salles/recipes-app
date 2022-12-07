@@ -21,8 +21,8 @@ function RecipeInProgress() {
   useEffect(() => {
     const x = window.location.pathname;
     const sete = 7; const doze = 12;
-    const recipeID = x.slice(sete, doze);
     if (x.includes('meals')) {
+      const recipeID = x.slice(sete, doze);
       fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`)
         .then((response) => response.json())
         .then((fetchComida) => {
@@ -30,7 +30,9 @@ function RecipeInProgress() {
           dispatch(receiveRecipeforId(fetchComida));
         });
     } else {
-      fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+      const recipeID = x.slice(8, 13);
+      console.log(recipeID);
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeID}`)
         .then((response) => response.json())
         .then((fetchBebida) => {
           setDataDrinks(fetchBebida.drinks[0]);
