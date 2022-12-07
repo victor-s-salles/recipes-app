@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { fetchRecipeId, fetchAllRecipes } from '../redux/actions';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const recipe = useSelector((state) => state.recipes.recipesForId);
   const loading = useSelector((state) => state.recipes.IsLoading);
   const [ingredients, setingredients] = useState([]);
@@ -54,6 +56,10 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
       setingredients(allIngredients);
     });
   }, [data]);
+
+  const startRecipe = () => {
+    history.push(`${pathname}/in-progress`);
+  };
 
   if (loading) { return <h1>Carregando...</h1>; }
 
@@ -113,6 +119,17 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           <p data-testid="instructions">{recipe.drinks[0].strInstructions}</p>
         </section>
       )}
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        onClick={ startRecipe }
+        style={ {
+          position: 'fixed',
+          bottom: 0,
+        } }
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
@@ -120,12 +137,13 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
 RecipeDetails.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
-  }).isRequired,
+  }),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
-    }).isRequired,
-  }).isRequired,
-};
+    }),
+  }),
+  history: PropTypes.object,
+}.isRequired;
 
 export default RecipeDetails;
