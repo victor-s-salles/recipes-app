@@ -78,6 +78,7 @@ function FavoriteButton() {
       type="button"
       data-testid="favorite-btn"
       onClick={ onFavoriteButtonClick }
+      src={ (filled) ? filledIcon : UnfilledIcon }
     >
       <img
         alt="favorite-icon"
