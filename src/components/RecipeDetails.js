@@ -15,14 +15,14 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const [data, setData] = useState({});
   const [completeRecipe, setCompleteRecipe] = useState(false);
 
-  useEffect(() => {
-    const doneRecipes = JSON.parse(localStorage.getItem('myData'));
-    doneRecipes.forEach((item) => {
-      if (item.id === id) {
-        setCompleteRecipe(true);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   const doneRecipes = JSON.parse(localStorage.getItem('myData'));
+  //   doneRecipes.forEach((item) => {
+  //     if (item.id === id) {
+  //       setCompleteRecipe(true);
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (pathname.includes('drink')) {
