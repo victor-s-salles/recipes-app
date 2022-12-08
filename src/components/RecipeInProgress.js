@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
 import { receiveRecipeforId } from '../redux/actions/index';
 
 function RecipeInProgress() {
+  const location = useLocation();
+  const { id } = useParams();
   const [drinksID, setDataDrinks] = useState();
   const [mealsID, setDataMeals] = useState();
   const dispatch = useDispatch();
@@ -14,21 +17,20 @@ function RecipeInProgress() {
       target.parentNode.style.textDecorationLine = 'line-through';
       target.parentNode.style.textDecorationStyle = 'solid';
       target.parentNode.style.textDecorationColor = 'rgb(0, 0, 0)';
-    } else { target.parentNode.style.textDecorationLine = 'none'; }
+    } else { target.parentNode.style = 'none'; }
   };
 
   useEffect(() => {
-    const x = window.location.pathname;
-    const recipeID = x.split('/');
+    const x = location.pathname;
     if (x.includes('meals')) {
-      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID[2]}`)
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
         .then((fetchComida) => {
           setDataMeals(fetchComida.meals[0]);
           dispatch(receiveRecipeforId(fetchComida));
         });
-    } else if (x.includes('drinks')) {
-      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeID[2]}`)
+    } else {
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
         .then((fetchBebida) => {
           setDataDrinks(fetchBebida.drinks[0]);
@@ -88,7 +90,7 @@ function RecipeInProgress() {
           <img
             data-testid="recipe-photo"
             src={ mealsID.strMealThumb }
-            alt=""
+            alt={ mealsID.strMeal }
           />
           <p data-testid="recipe-title">{ mealsID.strArea }</p>
           <p data-testid="recipe-category">{ mealsID.strCategory }</p>
