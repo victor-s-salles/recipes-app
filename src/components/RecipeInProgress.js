@@ -90,7 +90,7 @@ function RecipeInProgress() {
           <img
             data-testid="recipe-photo"
             src={ mealsID.strMealThumb }
-            alt=""
+            alt={ mealsID.strMeal }
           />
           <p data-testid="recipe-title">{ mealsID.strArea }</p>
           <p data-testid="recipe-category">{ mealsID.strCategory }</p>
