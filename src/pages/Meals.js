@@ -20,6 +20,7 @@ class Meals extends React.Component {
     const responseMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const mealsData = await responseMeals.json();
     const dozeMeals = mealsData.meals.slice(0, doze);
+    console.log(dozeMeals);
 
     const responseCategories = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const mealsCategoriesData = await responseCategories.json();
@@ -82,7 +83,11 @@ class Meals extends React.Component {
 
         {mealsState.map((ele, index) => (
           <Link to={ `/meals/${ele.idMeal}` } key={ index }>
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <div
+              key={ index }
+              data-testid={ `${index}-recipe-card` }
+              className="card-recipe"
+            >
               <img
                 src={ ele.strMealThumb }
                 alt=""

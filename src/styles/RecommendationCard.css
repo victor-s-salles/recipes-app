@@ -2,7 +2,7 @@
 
 .container-recommendation {
   position: relative;
-  max-width: 360px;
+  max-width: 350px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -18,13 +18,18 @@
 .gallery{
     display: flex;
     flex-flow: row nowrap;
-    gap: 15px;
-    width: 200px;
-    height: 270px; 
+    height: fit-content;
+  letter-spacing: 1px;
+  margin: 0 4% 4% 1%;
+  min-width: 46%;
+  padding: 3px;
+  position: relative;
+  top: 0;
 }
 
 .gallery img {
     width: 170px;
     height: 200px; 
     border-radius: 5px;
+    padding: 5px;
 }

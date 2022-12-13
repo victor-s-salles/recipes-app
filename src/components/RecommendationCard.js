@@ -5,19 +5,11 @@ import '../styles/RecommendationCard.css';
 function RecommendationCard() {
   const recommendation = useSelector((state) => state.recipes.allRecipes);
   const [data, setData] = useState([]);
-  const [verify, setVerify] = useState(false);
   const type = Object.keys(recommendation).toString();
 
-  const recommendationVerify = () => {
-    if (recommendation) {
-      setVerify(true);
-    }
-  };
-
   useEffect(() => {
-    recommendationVerify();
     const key = 6;
-    if (verify) {
+    if (type) {
       if (type === 'drinks') {
         const drinkData = recommendation.drinks;
         const recommendationData = drinkData.slice(0, key);
