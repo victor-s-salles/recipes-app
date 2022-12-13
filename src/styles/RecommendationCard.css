@@ -7,8 +7,8 @@
 }
 
 .container-wrapper {
-  box-sizing: border-box;
   background: #242121;
+  box-sizing: border-box;
   border: 0.518px solid #b1b1b1;
   border-radius: 5px;
   overflow-x: scroll;
@@ -28,7 +28,7 @@
 
 .gallery img {
   border-radius: 5px;
-  height: 200px; 
+  height: 200px;
   padding: 5px;
   width: 170px;
 }
