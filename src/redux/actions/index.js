@@ -4,10 +4,6 @@ export const RECEIVE_RECIPES = 'RECEIVE_RECIPES';
 export const DRINKS = 'DRINKS';
 export const MEALS = 'MEALS';
 
-const requestRecipes = () => ({
-  type: REQUEST_RECIPES,
-});
-
 export const receiveRecipeforId = (recipeId) => ({
   type: RECEIVE_RECIPE_FOR_ID,
   payload: recipeId,

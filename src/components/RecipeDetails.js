@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { receiveRecipeforId } from '../redux/actions';
+import { receiveRecipeforId, receiveRecipes } from '../redux/actions';
 import getRecipes from '../services/getRecipes';
 import getRecipeForId from '../services/getRecipeForId';
 import FavoriteButton from './FavoriteButton';
@@ -11,28 +11,33 @@ import ShareButton from './ShareButton';
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const recipe = useSelector((state) => state.recipes.recipesForId);
-  // const loading = useSelector((state) => state.recipes.IsLoading);
   const [loading, setLoading] = useState(true);
   const [ingredients, setingredients] = useState();
   const [completeRecipe, setCompleteRecipe] = useState(false);
   const [progressRecipes, setProgressRecipe] = useState(false);
   const [recipe, setRecipe] = useState();
   const [type, setType] = useState();
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   useEffect(() => {
     const getRequest = async () => {
       if (pathname.includes('drinks')) {
         const urlId = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
-        // const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
         const recipeId = await getRecipeForId(urlId, id);
-        console.log(recipeId);
+        const recommendationRecipes = await getRecipes(url);
         setRecipe(recipeId);
+        dispatch(receiveRecipeforId(recipeId));
+        dispatch(receiveRecipes(recommendationRecipes));
       } else {
         const urlId = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
-        // const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+        const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
         const recipeId = await getRecipeForId(urlId, id);
+        const recommendationRecipes = await getRecipes(url);
         setRecipe(recipeId);
+        dispatch(receiveRecipeforId(recipeId));
+        dispatch(receiveRecipes(recommendationRecipes));
       }
     };
     getRequest();
@@ -54,25 +59,18 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     }
   }, [recipe]);
 
-  // useEffect(() => {
-  //   if (type) {
-  //     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  //     doneRecipes.forEach((item) => {
-  //       if (item.id === id) {
-  //         setCompleteRecipe(true);
-  //       }
-  //     });
-  //   }
-  // }, [type]);
+  useEffect(() => {
+    if (doneRecipes) {
+      doneRecipes.forEach((item) => {
+        if (item.id === id) {
+          setCompleteRecipe(true);
+        }
+      });
+    }
+  }, [doneRecipes]);
 
   useEffect(() => {
-    if (type) {
-      const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      // const startedRecipes = {
-      //   drinks: {
-      //     15997: [],
-      //   },
-      // };
+    if (startedRecipes && type) {
       const idStartedRecipes = Object.keys(startedRecipes[type]);
       idStartedRecipes.forEach((item) => {
         if (item === id) {
@@ -80,7 +78,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
         }
       });
     }
-  }, [type]);
+  }, [startedRecipes, type]);
 
   const setAllIngredients = () => {
     const listIngredient = ingredients.map((element, index) => (
@@ -98,14 +96,14 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   };
   console.log(recipe);
   console.log(type);
-  console.log(ingredients);
+  console.log(startedRecipes);
   if (loading) { return <h1>Carregando...</h1>; }
   return (
     <div>
       {ingredients ? (
         <>
-          {/* <FavoriteButton />
-          <ShareButton /> */}
+          <FavoriteButton />
+          <ShareButton />
           {!pathname.includes('drinks') ? (
             <section>
               <img
@@ -148,7 +146,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           )}
         </>
       ) : null}
-      {completeRecipe ? (
+      {!completeRecipe ? (
         <button
           type="button"
           data-testid="start-recipe-btn"
