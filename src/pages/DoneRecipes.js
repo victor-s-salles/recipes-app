@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 // import shareIcon from '../images/shareIcon.svg';
+import ShareButton from '../components/ShareButton';
 
 function DoneRecipes() {
   const [recipeType, setRecipeType] = useState('all');
@@ -14,10 +15,10 @@ function DoneRecipes() {
       setActualRecipe(doneRecipes);
       break;
     case 'drink':
-      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'drink'));
+      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'drinks'));
       break;
     case 'meal':
-      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'meal'));
+      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'meals'));
       break;
     default:
       break;
@@ -47,13 +48,13 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      {actualRecipe && actualRecipe.map((recipe, index) => (
+      {actualRecipe ? actualRecipe.map((recipe, index) => (
         <div key={ index }>
           <Link to={ `/drinks/${recipe.id}` }>
             <img
               src={ recipe.image }
               alt={ `${recipe.name} imagem` }
-              data-testid={ `${index}-horizontal-img` }
+              data-testid={ `${index}-horizontal-image` }
             />
             <h2
               data-testid={ `${index}-horizontal-name` }
@@ -61,7 +62,7 @@ function DoneRecipes() {
               {recipe.name}
             </h2>
           </Link>
-          {recipe.type === meal ? (
+          {recipe.type === 'meals' ? (
             <h3
               data-testid={ `${index}-horizontal-top-text` }
             >
@@ -80,27 +81,17 @@ function DoneRecipes() {
           >
             {recipe.doneDate}
           </h2>
-          {recipe.type === 'meal' ? (
-            <h2 data-testid={ `${index}-${recipe.tag}-horizontal-tag` }>
+          {recipe.type === 'meals' ? (
+            <h2 data-testid={ `${index}-${recipe.tag[0]}-horizontal-tag` }>
               {recipe.tag[0]}
               {recipe.tag[1]}
             </h2>)
             : null }
-
+          <ShareButton />
         </div>
 
-      ))}
+      )) : null}
     </div>
   );
 }
 export default DoneRecipes;
-
-/* <button
-            type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-          >
-            <img
-            src={shareIcon}
-            alt='botão compartilhar'>
-
-          </button> */

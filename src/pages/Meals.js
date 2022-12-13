@@ -21,7 +21,6 @@ class Meals extends React.Component {
     const mealsData = await responseMeals.json();
     const dozeMeals = mealsData.meals.slice(0, doze);
     console.log(dozeMeals);
-
     const responseCategories = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const mealsCategoriesData = await responseCategories.json();
     const cincoCategoriesMeals = mealsCategoriesData.meals.slice(0, cinco);

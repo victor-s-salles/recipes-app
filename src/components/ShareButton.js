@@ -18,7 +18,7 @@ function ShareButton() {
   };
 
   return (
-    <>
+    <div>
       <button
         type="button"
         data-testid="share-btn"
@@ -31,7 +31,7 @@ function ShareButton() {
           ? <p>Link copied!</p>
           : (null)
       }
-    </>
+    </div>
   );
 }
 
