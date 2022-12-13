@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import App from '../App';
-import mockDataMeals from './helpers/mocks/mockDataMeals';
+import mockDataMeals from './mocks/mockDataMeals';
 
 const recipes = [
   {
