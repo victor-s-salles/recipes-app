@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { receiveRecipeforId, receiveRecipes } from '../redux/actions';
 import getRecipes from '../services/getRecipes';
 import getRecipeForId from '../services/getRecipeForId';
@@ -11,7 +10,6 @@ import RecommendationCard from './RecommendationCard';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [ingredients, setingredients] = useState();
   const [recipe, setRecipe] = useState();
@@ -67,10 +65,6 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     return listIngredient;
   };
 
-  const startRecipe = () => {
-    history.push(`${pathname}/in-progress`);
-  };
-
   if (loading) { return <h1>Carregando...</h1>; }
   return (
     <div>
@@ -93,7 +87,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
                 data-testid="video"
                 width="560"
                 height="315"
-                src={ recipe[type][0].strYoutube.replace('watch?v=', 'embed/') }
+                src={ recipe[type][0].strYoutube }
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer;
@@ -107,7 +101,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           ) : (
             <section>
               <img
-                src={ recipe.drinks[0].strDrinkThumb }
+                src={ recipe[type][0].strDrinkThumb }
                 alt={ recipe[type][0].strDrink }
                 data-testid="recipe-photo"
               />

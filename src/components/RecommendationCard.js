@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import '../styles/RecommendationCard.css';
 
@@ -20,7 +21,7 @@ function RecommendationCard() {
         setData(recommendationData);
       }
     }
-  }, [recommendation]);
+  }, []);
 
   return (
     <>
@@ -30,26 +31,29 @@ function RecommendationCard() {
           {type === 'drinks' ? (
             <section className="gallery">
               {data.map((element, i) => (
-                <div
+                <Link
                   data-testid={ `${i}-recommendation-card` }
                   key={ element.idDrink }
+                  to={ `/drinks/${element.idDrink}` }
+                  onClick={ () => window.location.replace(`/drinks/${element.idDrink}`) }
                 >
                   <img src={ element.strDrinkThumb } alt={ element.strCategory } />
                   <p data-testid={ `${i}-recommendation-title` }>{element.strDrink}</p>
-                </div>
+                </Link>
               ))}
             </section>
           ) : (
             <section className="gallery">
               {data.map((element, i) => (
-                <div
+                <Link
                   data-testid={ `${i}-recommendation-card` }
                   key={ element.idMeal }
-
+                  to={ `/meals/${element.idMeal}` }
+                  onClick={ () => window.location.replace(`/meals/${element.idMeal}`) }
                 >
                   <img src={ element.strMealThumb } alt={ element.strCategory } />
                   <p data-testid={ `${i}-recommendation-title` }>{element.strMeal}</p>
-                </div>
+                </Link>
               ))}
             </section>)}
         </div>
