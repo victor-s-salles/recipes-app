@@ -8,9 +8,9 @@
 
 .container-wrapper {
   background: #242121;
-  box-sizing: border-box;
   border: 0.518px solid #b1b1b1;
   border-radius: 5px;
+  box-sizing: border-box;
   overflow-x: scroll;
 }
 
