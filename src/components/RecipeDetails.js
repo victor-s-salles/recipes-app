@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { receiveRecipeforId, receiveRecipes } from '../redux/actions';
 import getRecipes from '../services/getRecipes';
 import getRecipeForId from '../services/getRecipeForId';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
+import RecommendationCard from './RecommendationCard';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
@@ -118,7 +119,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           ) : (
             <section>
               <img
-                src={ recipe.drinks[0].strDrinkThumb }
+                src={ recipe[type][0].strDrinkThumb }
                 alt={ recipe[type][0].strDrink }
                 data-testid="recipe-photo"
               />
@@ -128,6 +129,9 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
               <p data-testid="instructions">{recipe[type][0].strInstructions}</p>
             </section>
           )}
+          <section>
+            <RecommendationCard />
+          </section>
         </>
       ) : null}
       {!completeRecipe ? (
