@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { receiveRecipeforId, receiveRecipes } from '../redux/actions';
 import getRecipes from '../services/getRecipes';
@@ -10,10 +11,13 @@ import RecommendationCard from './RecommendationCard';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [ingredients, setingredients] = useState();
+  const [completeRecipe, setCompleteRecipe] = useState(false);
   const [recipe, setRecipe] = useState();
   const [type, setType] = useState();
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   useEffect(() => {
     const getRequest = async () => {
@@ -54,6 +58,16 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     }
   }, [recipe]);
 
+  useEffect(() => {
+    if (doneRecipes) {
+      doneRecipes.forEach((item) => {
+        if (item.id === id) {
+          setCompleteRecipe(true);
+        }
+      });
+    }
+  }, [doneRecipes]);
+
   const setAllIngredients = () => {
     const listIngredient = ingredients.map((element, index) => (
       <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
@@ -63,6 +77,10 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
       </p>
     ));
     return listIngredient;
+  };
+
+  const startRecipe = () => {
+    history.push(`${pathname}/in-progress`);
   };
 
   if (loading) { return <h1>Carregando...</h1>; }
@@ -91,10 +109,10 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer;
-            clipboard-write;
-            encrypted-media;
-            gyroscope;
-            picture-in-picture"
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture"
                 allowFullScreen
               />
             </section>
@@ -116,6 +134,18 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           </section>
         </>
       ) : null}
+      {!completeRecipe ? (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ startRecipe }
+          style={ {
+            position: 'fixed',
+            bottom: 0,
+          } }
+        >
+          Start Recipe
+        </button>) : null}
     </div>
   );
 }
