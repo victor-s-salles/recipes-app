@@ -69,17 +69,6 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     }
   }, [doneRecipes]);
 
-  useEffect(() => {
-    if (startedRecipes && type) {
-      const idStartedRecipes = Object.keys(startedRecipes[type]);
-      idStartedRecipes.forEach((item) => {
-        if (item === id) {
-          setProgressRecipe(true);
-        }
-      });
-    }
-  }, [startedRecipes, type]);
-
   const setAllIngredients = () => {
     const listIngredient = ingredients.map((element, index) => (
       <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
@@ -94,9 +83,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const startRecipe = () => {
     history.push(`${pathname}/in-progress`);
   };
-  console.log(recipe);
-  console.log(type);
-  console.log(startedRecipes);
+
   if (loading) { return <h1>Carregando...</h1>; }
   return (
     <div>
