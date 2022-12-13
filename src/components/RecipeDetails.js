@@ -78,7 +78,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     return listIngredient;
   };
 
-  const startRecipes = () => {
+  const startRecipe = () => {
     history.push(`${pathname}/in-progress`);
   };
 
@@ -134,7 +134,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
         <button
           type="button"
           data-testid="start-recipe-btn"
-          onClick={ startRecipes }
+          onClick={ startRecipe }
           style={ {
             position: 'fixed',
             bottom: 0,
