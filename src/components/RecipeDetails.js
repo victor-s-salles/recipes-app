@@ -95,8 +95,7 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     history.push(`${pathname}/in-progress`);
   };
   console.log(recipe);
-  console.log(type);
-  console.log(startedRecipes);
+
   if (loading) { return <h1>Carregando...</h1>; }
   return (
     <div>
