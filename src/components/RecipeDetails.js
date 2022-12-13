@@ -15,9 +15,11 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const [loading, setLoading] = useState(true);
   const [ingredients, setingredients] = useState();
   const [completeRecipe, setCompleteRecipe] = useState(false);
+  const [progressRecipes, setProgressRecipe] = useState(false);
   const [recipe, setRecipe] = useState();
   const [type, setType] = useState();
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   useEffect(() => {
     const getRequest = async () => {
@@ -67,6 +69,17 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
       });
     }
   }, [doneRecipes]);
+
+  useEffect(() => {
+    if (startedRecipes && type) {
+      const idStartedRecipes = Object.keys(startedRecipes[type]);
+      idStartedRecipes.forEach((item) => {
+        if (item === id) {
+          setProgressRecipe(true);
+        }
+      });
+    }
+  }, [startedRecipes, type]);
 
   const setAllIngredients = () => {
     const listIngredient = ingredients.map((element, index) => (
@@ -145,6 +158,18 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
           } }
         >
           Start Recipe
+        </button>) : null}
+      {progressRecipes ? (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ startRecipe }
+          style={ {
+            position: 'fixed',
+            bottom: 0,
+          } }
+        >
+          Continue Recipe
         </button>) : null}
     </div>
   );
