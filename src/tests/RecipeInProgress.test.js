@@ -23,14 +23,30 @@ describe('Pagina de Recipes', () => {
     expect(await screen.findByText('A1')).toBeInTheDocument();
     expect(screen.getByTestId('recipe-photo')).toBeInTheDocument();
 
-    const check = screen.getByTestId('0-ingredient-step');
+    const check0 = screen.getByTestId('0-ingredient-step');
+    const check1 = screen.getByTestId('1-ingredient-step');
+    const check2 = screen.getByTestId('2-ingredient-step');
+    const check3 = screen.getByTestId('3-ingredient-step');
 
-    expect(check).toBeInTheDocument();
+    expect(check0).toBeInTheDocument();
 
     expect(screen.getByLabelText('Gin')).toBeInTheDocument();
 
-    userEvent.click(check);
-    userEvent.click(check);
+    const finishBTN = screen.getByTestId('finish-recipe-btn');
+
+    userEvent.click(check0);
+    userEvent.click(check0);
+
+    userEvent.click(check0);
+    userEvent.click(check1);
+    userEvent.click(check2);
+    userEvent.click(check3);
+
+    expect(finishBTN).toBeInTheDocument();
+    expect(finishBTN).not.toBeDisabled();
+
+    userEvent.click(finishBTN);
+    expect(history.location.pathname).toBe('/done-recipes');
   });
 
   test('2 - Verifica a pagina de MEALS in progress', async () => {
@@ -60,5 +76,15 @@ describe('Pagina de Recipes', () => {
 
     userEvent.click(check);
     userEvent.click(check);
+  });
+  test('3 - Verifica se apos marcar todos checkboxes o botao finish recipe fica habilidado', async () => {
+    jest.spyOn(global, 'fetch');
+
+    // Usando o arquivo 'mealsID' que eh o mock
+    global.fetch.mockResolvedValue({ json: jest.fn().mockResolvedValue(mealsID) });
+
+    // Entrando direto na pagina de MEALS in progress usando o pathname '/meals/53060/in-progress'
+    const { history } = renderWithRouterAndRedux(<App />, { initialEntries: ['/meals/53060/in-progress'] });
+    expect(history.location.pathname).toBe('/meals/53060/in-progress');
   });
 });

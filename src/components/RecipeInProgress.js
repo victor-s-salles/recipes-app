@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
 import { receiveRecipeforId } from '../redux/actions/index';
 import CheckBox from './CheckBox';
 
 function RecipeInProgress() {
+  const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const { id } = useParams();
   const [drinksID, setDataDrinks] = useState();
   const [mealsID, setDataMeals] = useState();
   const [finishBTN, setFinishBTN] = useState(true);
   const [numberCheckbox, setNumberCheckbox] = useState(0);
-  const dispatch = useDispatch();
   const [listOfIngredients, setListOfIngredients] = useState([]);
+
   const x = location.pathname;
   const recipeID = x.split('/');
   const recipeNewID = recipeID[2];
@@ -25,7 +27,6 @@ function RecipeInProgress() {
       localStorage.setItem('inProgressRecipes', JSON.stringify({ ...inProgressRecipes,
         meals: { ...inProgressRecipes.meals, [recipeNewID]: newArray } }));
     } else {
-      console.log(newArray);
       localStorage.setItem('inProgressRecipes', JSON.stringify({ ...inProgressRecipes,
         drinks: { ...inProgressRecipes.drinks, [recipeNewID]: newArray } }));
     }
@@ -37,10 +38,6 @@ function RecipeInProgress() {
     }
 
     setNumberCheckbox(target.parentNode.parentNode.parentNode.childElementCount);
-    // const numberCheckbox = target.parentNode.parentNode.parentNode.childElementCount;
-    // if (listOfIngredients.length === numberCheckbox) {
-    //   setFinishBTN(false);
-    // }
 
     if (listOfIngredients) {
       const checked = listOfIngredients.some((e) => (e === target.name));
@@ -83,6 +80,7 @@ function RecipeInProgress() {
       setListOfIngredients([]);
     }
   };
+
   const saveDrinks = () => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (!inProgressRecipes) {
@@ -107,6 +105,7 @@ function RecipeInProgress() {
         meals: { },
       }));
     }
+
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (x.includes('meals')) {
       fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
@@ -114,10 +113,8 @@ function RecipeInProgress() {
         .then((fetchComida) => {
           setDataMeals(fetchComida.meals[0]);
           dispatch(receiveRecipeforId(fetchComida));
-
           setNumberCheckbox(Object.entries(fetchComida.meals[0]).filter((ele) => ele[0]
             .includes('strIngredient') && ele[1]).map((ele) => ele[1]).length);
-
           if (inProgressRecipes.meals[recipeNewID]) {
             setListOfIngredients(inProgressRecipes.meals[recipeNewID]);
           }
@@ -126,7 +123,6 @@ function RecipeInProgress() {
       saveMeals();
     } else {
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-
         .then((response) => response.json())
         .then((fetchBebida) => {
           setDataDrinks(fetchBebida.drinks[0]);
@@ -134,16 +130,12 @@ function RecipeInProgress() {
           setNumberCheckbox(Object.entries(fetchBebida.drinks[0]).filter((ele) => ele[0]
             .includes('strIngredient') && ele[1]).map((ele) => ele[1]).length);
         });
-
       if (inProgressRecipes.drinks[recipeNewID]) {
         setListOfIngredients(inProgressRecipes.drinks[recipeNewID]);
       }
       saveDrinks();
     }
   }, []);
-
-  console.log(numberCheckbox);
-  console.log(listOfIngredients.length);
 
   useEffect(() => {
     if (listOfIngredients.length === numberCheckbox) {
@@ -170,10 +162,10 @@ function RecipeInProgress() {
           <button
             data-testid="finish-recipe-btn"
             type="button"
+            onClick={ () => { history.push('/done-recipes'); } }
             disabled={ finishBTN }
           >
             Finish Recipe
-            {/* BOTAO DE FINALIZAR */}
           </button>
           <p>Ingredients</p>
           <div id="checkboxes">
@@ -213,10 +205,10 @@ function RecipeInProgress() {
           <button
             data-testid="finish-recipe-btn"
             type="button"
+            onClick={ () => { history.push('/done-recipes'); } }
             disabled={ finishBTN }
           >
             Finish Recipe
-            {/* BOTAO DE FINALIZAR */}
           </button>
           <p>Ingredients</p>
           <div>
@@ -232,7 +224,6 @@ function RecipeInProgress() {
                     handleCheckedMain={ handleChecked }
                     listChecked={ listOfIngredients }
                     check={ testADD(ele2Ingredient) }
-
                   />
                 </div>
               ))}

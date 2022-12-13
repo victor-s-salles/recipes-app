@@ -6,7 +6,6 @@ function ShareButton() {
   const location = useLocation();
 
   let url = `http://localhost:3000${location.pathname}`;
-  console.log(url.split('/in-progress')[0]);
 
   if (url.includes('in-progress')) {
     const newUrl = url.split('/in-progress')[0];
