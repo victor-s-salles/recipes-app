@@ -18,10 +18,10 @@ function SearchBar() {
         if (FecthUrl) {
           const response = await fetch(FecthUrl);
           const dataJson = await response.json();
-          if (!dataJson.drinks && !dataJson.meals) {
-            global.alert('Sorry, we haven\'t found any recipes for these filters.');
-          } else {
+          if (!(!dataJson.drinks && !dataJson.meals)) {
             setNewRecipes(dataJson);
+          } else {
+            global.alert('Sorry, we haven\'t found any recipes for these filters.');
           }
         }
       } catch (error) {
