@@ -1,0 +1,68 @@
+:root {
+
+  --color-red: #f50043;
+
+  --color-yellow: #f5e618;
+
+  --color-blue: #18bff5;
+
+
+}
+
+.searchBar-principalDiv {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.searchBar-SecondDiv {
+  align-items: center;
+  background-color: var(--color-yellow);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: -2px;
+  padding: 7px;
+}
+
+.searchBar-Input {
+  border: 1px solid #b1b1b1;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.searchBar-Input::placeholder {
+  font-size: 1.2em;
+  padding-left: 10px;
+}
+
+.searchBar-radiosDiv {
+  padding-bottom: 5px;
+  padding-top: 3px;
+}
+
+.searchBar-RadiosInputLabel {
+  font-size: 1.2em;
+  padding: 10px;
+}
+
+.searchBar-searchBTN {
+  background-color: var(--color-red);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 0.95em;
+  font-weight: 600;
+  height: 35px;
+  width: 50%;
+}
+
+.searchBar-RadiosInput {
+
+  /* background-color: #f50043;
+  color: #f50043; */
+  margin-right: 5px;
+
+}
+

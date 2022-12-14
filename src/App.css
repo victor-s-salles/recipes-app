@@ -10,6 +10,11 @@
   width: 100%;
 }
 
+* {
+  font-family: epilogue;
+}
+
+
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
-import doneRecipes from './helpers/mocks/mockDataDoneRecipes';
 import App from '../App';
 
 describe('Testa a página de Receitas feitas', () => {
