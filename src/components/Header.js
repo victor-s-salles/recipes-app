@@ -49,10 +49,10 @@ function Header({ pageName, searchingOFF }) {
 
 Header.propTypes = {
   pageName: PropTypes.string.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-  searchingOFF: PropTypes.bool.isRequired,
+  searchingOFF: PropTypes.bool,
+};
+Header.defaultProps = {
+  searchingOFF: false,
 };
 
 export default Header;

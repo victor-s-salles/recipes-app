@@ -9,7 +9,7 @@ function Profile({ history }) {
   const getLocalStorageEmail = () => {
     const emailLocalStorage = JSON.parse(localStorage.getItem('user'));
     if (!emailLocalStorage) {
-      history.push('/');
+      // history.push('/');
     } else {
       setEmail(emailLocalStorage.email);
     }
@@ -32,6 +32,7 @@ function Profile({ history }) {
       <button
         data-testid="profile-done-btn"
         type="button"
+        src="aas"
         onClick={ () => history.push('/done-recipes') }
       >
         Done Recipes
