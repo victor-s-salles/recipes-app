@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/Login.css';
+// import imagemFundoLogin from '../images/imagem-fundo.png';
+import logoLogin from '../images/logoLogin.png';
 
 function Login({ history }) {
   const [buttonDisable, setButtonDisable] = useState(true);
@@ -34,36 +37,46 @@ function Login({ history }) {
   }, [inputValue]);
 
   return (
-    <form className="login-form">
-      <label htmlFor="email">
-        <p>Email:</p>
-        <input
-          data-testid="email-input"
-          id="email"
-          name="email"
-          value={ inputValue.email }
-          onChange={ onInputChange }
-        />
-      </label>
-      <label htmlFor="password">
-        <p>Senha:</p>
-        <input
-          data-testid="password-input"
-          id="password"
-          name="password"
-          value={ inputValue.password }
-          onChange={ onInputChange }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ buttonDisable }
-        onClick={ onClickButton }
-      >
-        Login
-      </button>
-    </form>
+    <div className="login-divPai">
+      <form className="login-form">
+        {/* <img src={ imagemFundoLogin } alt="" /> */}
+        <img src={ logoLogin } alt="" className="login-logo" />
+        <p className="login-login">Login</p>
+        <label htmlFor="email" className="login-labelEmail">
+          <input
+            type="text"
+            data-testid="email-input"
+            className="login-inputSenha"
+            placeholder="Email"
+            id="email"
+            name="email"
+            value={ inputValue.email }
+            onChange={ onInputChange }
+          />
+        </label>
+        <label htmlFor="password" className="login-labelSenha">
+          <input
+            type="password"
+            data-testid="password-input"
+            className="login-inputEmail"
+            placeholder="Senha"
+            id="password"
+            name="password"
+            value={ inputValue.password }
+            onChange={ onInputChange }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          className="login-btn"
+          disabled={ buttonDisable }
+          onClick={ onClickButton }
+        >
+          Enter
+        </button>
+      </form>
+    </div>
   );
 }
 
