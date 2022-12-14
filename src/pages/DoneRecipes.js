@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import ShareButtonFavorites from '../components/ShareButtonFavorites';
 
 function DoneRecipes() {
-  const [recipeType, setRecipeType] = useState('all');
+  const [recipeType, setRecipeType] = useState('');
   const [actualRecipe, setActualRecipe] = useState('');
   const [localEmpty, setLocalEmpty] = useState(true);
 
@@ -19,9 +19,6 @@ function DoneRecipes() {
     isEmpty();
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     switch (recipeType) {
-    case 'all':
-      setActualRecipe(doneRecipes);
-      break;
     case 'drink':
       setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'drink'));
       break;
@@ -29,6 +26,7 @@ function DoneRecipes() {
       setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'meal'));
       break;
     default:
+      setActualRecipe(doneRecipes);
       break;
     }
   }, [recipeType]);
@@ -41,7 +39,7 @@ function DoneRecipes() {
           <button
             type="button"
             data-testid="filter-by-all-btn"
-            onClick={ () => setRecipeType('all') }
+            onClick={ () => setRecipeType('') }
           >
             All
           </button>
