@@ -100,7 +100,7 @@ describe('Testa o componente SearchBar na tela Meals', () => {
     const arrabiataTitle = await screen.findByTestId('recipe-title');
     expect(arrabiataTitle).toBeInTheDocument();
 
-    await expect(history.location.pathname).toBe('/meals/52771');
+    expect(history.location.pathname).toBe('/meals/52771');
   });
 
   it('Verifica se caso seja pesquisado uma comida, o resultado correto e retornado', async () => {
