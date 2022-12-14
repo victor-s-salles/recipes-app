@@ -8,7 +8,6 @@ function Recipes() {
   const history = useLocation();
   return (
     <div>
-      <h1>RECIPES</h1>
       {history.pathname === '/meals' ? (<Meals history={ history } />) : null}
       {history.pathname === '/drinks' ? (<Drinks history={ history } />) : null}
       <Footer />

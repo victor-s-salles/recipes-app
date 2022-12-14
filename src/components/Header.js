@@ -4,45 +4,82 @@ import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import '../styles/Header.css';
+import headerIcon from '../styles/icons/iconeRecipesapp.png';
+import mealsIcon from '../styles/icons/icone-prato.png';
+import doneIcon from '../styles/icons/done.png';
+import favoritesIcon from '../styles/icons/favorites.png';
+import drinkIcon from '../styles/icons/icone-drink.png';
+import perfilIcon from '../styles/icons/Perfil.png';
 
 function Header({ pageName, searchingOFF }) {
   const [searchDisplay, setSearchDisplay] = useState(false);
   const history = useHistory();
+  const headerLogo = () => {
+    switch (pageName) {
+    case 'Drinks': return drinkIcon;
+    case 'Meals': return mealsIcon;
+    case 'Profile': return perfilIcon;
+    case 'Done Recipes': return doneIcon;
+    case 'Favorite Recipes': return favoritesIcon;
+    default: return mealsIcon;
+    }
+  };
   return (
-    <div>
-      <h1 data-testid="page-title">
-        {pageName}
-        {' '}
-      </h1>
-      <button
-        type="button"
-        onClick={ () => {
-          history.push('/profile');
-        } }
-      >
-        <img
-          src={ profileIcon }
-          data-testid="profile-top-btn"
-          alt="Ícone de Perfil"
-        />
-      </button>
-      {!searchingOFF && (
-        <div>
+    <div className="HeaderPrincipalDiv">
+
+      <div className="HeaderSecondDiv">
+        <img src={ headerIcon } alt="ícone bandeja de comida" className="HeaderIcon" />
+        <h1 className="HeaderTitle">Recipes App</h1>
+        <div className="HeaderButtonsDiv">
+
+          {!searchingOFF && (
+            <div>
+              <button
+                className="HeaderBTNs"
+                type="button"
+                onClick={ () => {
+                  setSearchDisplay(!searchDisplay);
+                } }
+              >
+                <img
+                  className="HeaderSearchBTN"
+                  src={ searchIcon }
+                  data-testid="search-top-btn"
+                  alt="Ícone de Perfil de busca"
+                />
+              </button>
+
+            </div>
+          )}
           <button
             type="button"
+            className="HeaderBTNs"
             onClick={ () => {
-              setSearchDisplay(!searchDisplay);
+              history.push('/profile');
             } }
           >
             <img
-              src={ searchIcon }
-              data-testid="search-top-btn"
-              alt="Ícone de Perfil de busca"
+              className="HeaderProfileBTN"
+              src={ profileIcon }
+              data-testid="profile-top-btn"
+              alt="Ícone de Perfil"
             />
           </button>
-          {searchDisplay && <SearchBar />}
         </div>
-      )}
+      </div>
+
+      <h1 data-testid="page-title" className="HeaderPageName">
+        <img
+          src={ headerLogo() }
+          alt="ícone de prato"
+          className="HeaderIconPage"
+          width={ pageName === 'Meals' ? '85px' : '65px' }
+        />
+        {pageName}
+        {' '}
+      </h1>
+      {searchDisplay && <SearchBar />}
     </div>
   );
 }
