@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-// import shareIcon from '../images/shareIcon.svg';
-import ShareButton from '../components/ShareButton';
+import ShareButtonFavorites from '../components/ShareButtonFavorites';
 
 function DoneRecipes() {
   const [recipeType, setRecipeType] = useState('all');
@@ -15,15 +14,16 @@ function DoneRecipes() {
       setActualRecipe(doneRecipes);
       break;
     case 'drink':
-      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'drinks'));
+      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'drink'));
       break;
     case 'meal':
-      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'meals'));
+      setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'meal'));
       break;
     default:
       break;
     }
   }, [recipeType]);
+  console.log(actualRecipe);
   return (
     <div>
       <Header pageName="Done Recipes" searchingOFF />
@@ -50,8 +50,9 @@ function DoneRecipes() {
       </button>
       {actualRecipe ? actualRecipe.map((recipe, index) => (
         <div key={ index }>
-          <Link to={ `/drinks/${recipe.id}` }>
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
             <img
+              width="200px"
               src={ recipe.image }
               alt={ `${recipe.name} imagem` }
               data-testid={ `${index}-horizontal-image` }
@@ -62,7 +63,7 @@ function DoneRecipes() {
               {recipe.name}
             </h2>
           </Link>
-          {recipe.type === 'meals' ? (
+          {recipe.type === 'meal' ? (
             <h3
               data-testid={ `${index}-horizontal-top-text` }
             >
@@ -81,13 +82,21 @@ function DoneRecipes() {
           >
             {recipe.doneDate}
           </h2>
-          {recipe.type === 'meals' ? (
-            <h2 data-testid={ `${index}-${recipe.tag[0]}-horizontal-tag` }>
-              {recipe.tag[0]}
-              {recipe.tag[1]}
-            </h2>)
+          {recipe.type === 'meal' ? (
+            <div>
+              <h2 data-testid={ `${index}-${recipe.tags[0]}-horizontal-tag` }>
+                {recipe.tags[0]}
+              </h2>
+              <h2 data-testid={ `${index}-${recipe.tags[1]}-horizontal-tag` }>
+                {recipe.tags[1]}
+              </h2>
+            </div>)
             : null }
-          <ShareButton />
+          <ShareButtonFavorites
+            type={ `${recipe.type}s` }
+            id={ recipe.id }
+            index={ index }
+          />
         </div>
 
       )) : null}
