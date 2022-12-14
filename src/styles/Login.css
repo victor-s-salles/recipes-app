@@ -30,7 +30,7 @@
 }
 
 .login-inputSenha, .login-inputEmail {
-  border: #f50043 solid 2px;
+  border: #f5e618 solid 2px;
   border-radius: 5px;
   font-size: 18px;
   height: 40px;
@@ -53,8 +53,16 @@
   width: 270px;
 }
 
+.login-btn:disabled {
+  background: linear-gradient(to bottom, #7a7a7aa7 5%, #8787878e 100%);
+  background-color: #050303;
+  border-radius: 8px;
+  color: rgba(148, 145, 145, 0.656);
+  text-shadow: 0 1px 0 #4a4a4a6b;
+}
+
 .login-divPai {
-  background-image: url('../images/imagem-fundo.png');
+  background-image: url('../images/semTitulo.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 360px 800px;

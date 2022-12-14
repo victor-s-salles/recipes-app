@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/Login.css';
-// import imagemFundoLogin from '../images/imagem-fundo.png';
 import logoLogin from '../images/logoLogin.png';
 
 function Login({ history }) {
@@ -30,7 +29,7 @@ function Login({ history }) {
       if (emailConditions.test(inputValue.email)
         && inputValue.password.length > passwordMinLength) {
         setButtonDisable(false);
-      }
+      } else { setButtonDisable(true); }
     };
 
     buttonDisableControl();
@@ -39,7 +38,6 @@ function Login({ history }) {
   return (
     <div className="login-divPai">
       <form className="login-form">
-        {/* <img src={ imagemFundoLogin } alt="" /> */}
         <img src={ logoLogin } alt="" className="login-logo" />
         <p className="login-login">Login</p>
         <label htmlFor="email" className="login-labelEmail">
