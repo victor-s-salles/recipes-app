@@ -78,32 +78,10 @@ function DoneRecipes() {
             >
               {`${recipe.nationality} - ${recipe.category}`}
             </h3>)
-
-                : (
-                  <h3
-                    data-testid={ `${index}-horizontal-top-text` }
-                  >
-                    {recipe.alcoholicOrNot}
-                  </h3>
-                )}
-              <h2
-                data-testid={ `${index}-horizontal-done-date` }
+            : (
+              <h3
+                data-testid={ `${index}-horizontal-top-text` }
               >
-                {recipe.doneDate}
-              </h2>
-              {recipe.type === 'meal' ? (
-                <h2 data-testid={ `${index}-${recipe.tag}-horizontal-tag` }>
-                  {recipe.tag[0]}
-                  {recipe.tag[1]}
-                </h2>)
-                : null }
-
-            </div>
-
-          ))}
-
-        </div>)
-        : <h1>Nenhuma receita foi finalizada </h1> }
                 {recipe.alcoholicOrNot}
               </h3>
             )}
@@ -128,7 +106,6 @@ function DoneRecipes() {
             index={ index }
           />
         </div>
-
       )) : null}
     </div>
   );
