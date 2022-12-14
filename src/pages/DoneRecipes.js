@@ -6,8 +6,17 @@ import ShareButtonFavorites from '../components/ShareButtonFavorites';
 function DoneRecipes() {
   const [recipeType, setRecipeType] = useState('all');
   const [actualRecipe, setActualRecipe] = useState('');
+  const [localEmpty, setLocalEmpty] = useState(true);
+
+  const isEmpty = () => {
+    const recipes = localStorage.getItem('doneRecipes');
+    if (recipes) {
+      setLocalEmpty(false);
+    }
+  };
 
   useEffect(() => {
+    isEmpty();
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     switch (recipeType) {
     case 'all':
@@ -23,7 +32,7 @@ function DoneRecipes() {
       break;
     }
   }, [recipeType]);
-  console.log(actualRecipe);
+
   return (
     <div>
       <Header pageName="Done Recipes" searchingOFF />
@@ -70,10 +79,31 @@ function DoneRecipes() {
               {`${recipe.nationality} - ${recipe.category}`}
             </h3>)
 
-            : (
-              <h3
-                data-testid={ `${index}-horizontal-top-text` }
+                : (
+                  <h3
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
+                    {recipe.alcoholicOrNot}
+                  </h3>
+                )}
+              <h2
+                data-testid={ `${index}-horizontal-done-date` }
               >
+                {recipe.doneDate}
+              </h2>
+              {recipe.type === 'meal' ? (
+                <h2 data-testid={ `${index}-${recipe.tag}-horizontal-tag` }>
+                  {recipe.tag[0]}
+                  {recipe.tag[1]}
+                </h2>)
+                : null }
+
+            </div>
+
+          ))}
+
+        </div>)
+        : <h1>Nenhuma receita foi finalizada </h1> }
                 {recipe.alcoholicOrNot}
               </h3>
             )}
