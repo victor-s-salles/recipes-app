@@ -101,6 +101,18 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
     <div>
       {ingredients ? (
         <>
+          <button
+            type="button"
+            onClick={ () => {
+              if (pathname.includes('drinks')) {
+                history.push('/drinks');
+              } else {
+                history.push('/meals');
+              }
+            } }
+          >
+            Voltar
+          </button>
           <FavoriteButton />
           <ShareButton />
           {!pathname.includes('drinks') ? (
