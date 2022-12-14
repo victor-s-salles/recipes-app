@@ -38,7 +38,6 @@ function DoneRecipes() {
       <Header pageName="Done Recipes" searchingOFF />
       {!localEmpty ? (
         <div>
-          {' '}
           <button
             type="button"
             data-testid="filter-by-all-btn"
