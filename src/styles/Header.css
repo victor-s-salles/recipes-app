@@ -34,17 +34,19 @@
 .HeaderTitle {
   color: var(--color-yellow);
   font-size: 1.85em;
+  margin-left: 15px;
 
   /* text-shadow: black 1px 1px ; */
 }
 
-.HeaderBTNs {
+.HeaderBTNs, .HeaderButtonTitle {
   background: none;
   border: none;
 }
 
-.HeaderBTNs:hover {
+.HeaderBTNs:hover, .HeaderButtonTitle:hover {
   cursor: pointer;
+  scale: 1.2;
 }
 
 .HeaderProfileBTN {

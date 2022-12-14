@@ -30,7 +30,13 @@ function Header({ pageName, searchingOFF }) {
 
       <div className="HeaderSecondDiv">
         <img src={ headerIcon } alt="ícone bandeja de comida" className="HeaderIcon" />
-        <h1 className="HeaderTitle">Recipes App</h1>
+        <button
+          type="button"
+          className="HeaderButtonTitle"
+          onClick={ () => { history.push('/meals'); } }
+        >
+          <h1 className="HeaderTitle">Recipes App</h1>
+        </button>
         <div className="HeaderButtonsDiv">
 
           {!searchingOFF && (
