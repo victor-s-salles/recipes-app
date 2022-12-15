@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-
 import ShareButtonFavorites from '../components/ShareButtonFavorites';
+import '../styles/FavoriteRecipes.css';
 
 function FavoriteRecipes() {
   // localStorage.setItem('favoriteRecipes', JSON.stringify(receitas));
@@ -47,7 +47,7 @@ function FavoriteRecipes() {
     setFavoritesList(backupFavoritesList);
   };
   return (
-    <div className='favorite-page'>
+    <div className="favorite-page">
       <Header pageName="Favorite Recipes" searchingOFF />
       <h1>Lista de receitas favoritas</h1>
       <button
@@ -76,44 +76,64 @@ function FavoriteRecipes() {
       </button>
 
       {favoritesList.map((e, index) => (
-        <div key={ e.id }>
+        <div key={ e.id } className="favorite-details-container">
           <Link to={ e.type === 'drink' ? `/drinks/${e.id}` : `/meals/${e.id}` }>
             <img
               src={ e.image }
               alt={ e.name }
               data-testid={ `${index}-horizontal-image` }
               width="200px"
+              className="image-food-details"
             />
           </Link>
-          <Link to={ e.type === 'drink' ? `/drinks/${e.id}` : `/meals/${e.id}` }>
-            <p data-testid={ `${index}-horizontal-name` }>{e.name}</p>
-          </Link>
-          {e.type === 'meal' && (
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              {`${e.nationality} - ${e.category}`}
+          <div className="details-container">
+            <Link to={ e.type === 'drink' ? `/drinks/${e.id}` : `/meals/${e.id}` }>
+              <p
+                data-testid={ `${index}-horizontal-name` }
+                className="title-name"
+              >
+                {
+                  e.name
+                }
+              </p>
+            </Link>
+            {e.type === 'meal' && (
+              <p
+                data-testid={ `${index}-horizontal-top-text` }
+                className="category-and-nacionality"
+              >
+                {`${e.nationality} - ${e.category}`}
+              </p>
+            )}
+            <p
+              data-testid={ `${index}-${e.type}-horizontal-tag` }
+              className="tag"
+            >
+              {e.type}
             </p>
-          )}
-          <p data-testid={ `${index}-horizontal-done-date` }>
-            DATA QUE A RECEITA FOI FEITA
-          </p>
-          {e.type === 'drink' && (
-            <p data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</p>
-          )}
-          <ShareButtonFavorites
-            index={ index }
-            id={ e.id }
-            type={ e.type === 'drink' ? 'drinks' : 'meals' }
-          />
+            {e.type === 'drink' && (
+              <p data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</p>
+            )}
+            <p data-testid={ `${index}-horizontal-done-date` } className="date">
+              DATA QUE A RECEITA FOI FEITA
+            </p>
+            <div className="btn-share">
+              <ShareButtonFavorites
+                index={ index }
+                id={ e.id }
+                type={ e.type === 'drink' ? 'drinks' : 'meals' }
+              />
 
-          <p data-testid={ `${index}-${e.type}-horizontal-tag` }>{e.type}</p>
-          <button
-            src={ blackHeartIcon }
-            type="button"
-            data-testid={ `${index}-horizontal-favorite-btn` }
-            onClick={ () => { removeFavorite(e.id); } }
-          >
-            <img src={ blackHeartIcon } alt="Favorite button" />
-          </button>
+              <button
+                src={ blackHeartIcon }
+                type="button"
+                data-testid={ `${index}-horizontal-favorite-btn` }
+                onClick={ () => { removeFavorite(e.id); } }
+              >
+                <img src={ blackHeartIcon } alt="Favorite button" />
+              </button>
+            </div>
+          </div>
         </div>
       ))}
     </div>
