@@ -60,6 +60,10 @@
   width: 50%;
 }
 
+.searchBar-searchBTN:hover {
+  cursor: pointer;
+}
+
 .searchBar-RadiosInput {
 
   /* background-color: #f50043;
