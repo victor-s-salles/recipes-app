@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { recipesDrinks } from '../redux/actions';
 import Header from '../components/Header';
+import '../styles/Drinks.css';
 
 class Drinks extends React.Component {
   state = {
@@ -48,7 +49,6 @@ class Drinks extends React.Component {
     if (target.id === selectedCategory) {
       dispatch(recipesDrinks(bebidas)); this.setState({ selectedCategory: '' });
     }
-    console.log(target.id);
   };
 
   drinksRender = () => {
@@ -78,25 +78,31 @@ class Drinks extends React.Component {
             </button>
           </div>
         ))}
-
-        {drinkState.map((ele, index) => (
-          <Link to={ `/drinks/${ele.idDrink}` } key={ index }>
-            <div
-              className="card-recipe"
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              aria-hidden="true"
-            >
-              <img
-                src={ ele.strDrinkThumb }
-                alt={ `${ele.strDrink} imagem` }
-                width="200px"
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{ele.strDrink}</p>
-            </div>
-          </Link>
-        ))}
+        <div className="drinks-divPai">
+          {drinkState.map((ele, index) => (
+            <Link to={ `/drinks/${ele.idDrink}` } key={ index } className="drinks-link">
+              <div
+                className="drinks-Card"
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+                aria-hidden="true"
+              >
+                <img
+                  src={ ele.strDrinkThumb }
+                  alt={ `${ele.strDrink} imagem` }
+                  data-testid={ `${index}-card-img` }
+                  className="drinks-img"
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                  className="drinks-nameRecipe"
+                >
+                  {ele.strDrink}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
     );
   };
