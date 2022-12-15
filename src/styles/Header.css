@@ -10,15 +10,18 @@
 }
 
 
-/* .HeaderPrincipalDiv {
-
-} */
+.HeaderPrincipalDiv {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
 
 .HeaderSecondDiv {
   background-color: var(--color-red);
   display: flex;
   justify-content: space-around;
   padding: 10px;
+  width: 100%;
 }
 
 .HeaderButtonsDiv {
