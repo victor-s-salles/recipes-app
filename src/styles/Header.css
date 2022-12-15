@@ -20,7 +20,7 @@
   background-color: var(--color-red);
   display: flex;
   justify-content: space-around;
-  padding: 10px;
+  padding: 14px 0;
   width: 100%;
 }
 
