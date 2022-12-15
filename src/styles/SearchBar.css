@@ -30,6 +30,7 @@
 .searchBar-Input {
   border: 1px solid #b1b1b1;
   border-radius: 5px;
+  font-size: 1.3em;
   height: 40px;
 }
 
