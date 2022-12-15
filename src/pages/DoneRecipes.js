@@ -8,7 +8,7 @@ import drinks from '../styles/icons/drinks.png';
 import foods from '../styles/icons/foods.png';
 
 function DoneRecipes() {
-  const [recipeType, setRecipeType] = useState('all');
+  const [recipeType, setRecipeType] = useState('');
   const [actualRecipe, setActualRecipe] = useState('');
   const [localEmpty, setLocalEmpty] = useState(true);
   const zero = 0;
@@ -25,9 +25,6 @@ function DoneRecipes() {
     isEmpty();
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     switch (recipeType) {
-    case 'all':
-      setActualRecipe(doneRecipes);
-      break;
     case 'drink':
       setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'drink'));
       break;
@@ -35,6 +32,7 @@ function DoneRecipes() {
       setActualRecipe(doneRecipes.filter((recipe) => recipe.type === 'meal'));
       break;
     default:
+      setActualRecipe(doneRecipes);
       break;
     }
   }, [recipeType]);
@@ -73,6 +71,27 @@ function DoneRecipes() {
               <img src={ drinks } alt="bebidas" />
             </button>
           </div>
+          <button
+            type="button"
+            data-testid="filter-by-all-btn"
+            onClick={ () => setRecipeType('') }
+          >
+            All
+          </button>
+          <button
+            type="button"
+            data-testid="filter-by-meal-btn"
+            onClick={ () => setRecipeType('meal') }
+          >
+            Meals
+          </button>
+          <button
+            data-testid="filter-by-drink-btn"
+            type="button"
+            onClick={ () => setRecipeType('drink') }
+          >
+            Drinks
+          </button>
           {actualRecipe ? actualRecipe.map((recipe, index) => (
             <div className="recipes" key={ index }>
               <Link className="link" to={ `/${recipe.type}s/${recipe.id}` }>
