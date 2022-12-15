@@ -47,13 +47,14 @@ function FavoriteRecipes() {
     setFavoritesList(backupFavoritesList);
   };
   return (
-    <div>
+    <div className='favorite-page'>
       <Header pageName="Favorite Recipes" searchingOFF />
       <h1>Lista de receitas favoritas</h1>
       <button
         type="button"
         data-testid="filter-by-all-btn"
         onClick={ filterAll }
+        className="category-btn-favorite"
       >
         All
       </button>
@@ -61,6 +62,7 @@ function FavoriteRecipes() {
         type="button"
         data-testid="filter-by-meal-btn"
         onClick={ filterMeals }
+        className="category-btn-favorite"
       >
         Meals
       </button>
@@ -68,6 +70,7 @@ function FavoriteRecipes() {
         type="button"
         data-testid="filter-by-drink-btn"
         onClick={ filterDrinks }
+        className="category-btn-favorite"
       >
         Drinks
       </button>
