@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { recipesMeals } from '../redux/actions';
 import Header from '../components/Header';
+import '../styles/Meals.css';
 
 class Meals extends React.Component {
   state = {
@@ -55,7 +56,6 @@ class Meals extends React.Component {
   mealsRender = () => {
     const { categoriesMeals } = this.state;
     const { mealsState } = this.props;
-
     return (
       <section>
         <Header pageName="Meals" />
@@ -66,7 +66,6 @@ class Meals extends React.Component {
         >
           All
         </button>
-
         {categoriesMeals.map((ele, index2) => (
           <div key={ index2 }>
             <button
@@ -79,24 +78,30 @@ class Meals extends React.Component {
             </button>
           </div>
         ))}
-
-        {mealsState.map((ele, index) => (
-          <Link to={ `/meals/${ele.idMeal}` } key={ index }>
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="card-recipe"
-            >
-              <img
-                src={ ele.strMealThumb }
-                alt=""
-                width="200px"
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{ele.strMeal}</p>
-            </div>
-          </Link>
-        ))}
+        <div className="meals-divPai">
+          {mealsState.map((ele, index) => (
+            <Link to={ `/meals/${ele.idMeal}` } key={ index } className="meals-link">
+              <div
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+                className="meals-Card"
+              >
+                <img
+                  src={ ele.strMealThumb }
+                  alt={ ele.strMeal }
+                  className="meals-img"
+                  data-testid={ `${index}-card-img` }
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                  className="meals-nameRecipe"
+                >
+                  {ele.strMeal}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
     );
   };
