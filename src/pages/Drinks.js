@@ -58,26 +58,30 @@ class Drinks extends React.Component {
     return (
       <section>
         <Header pageName="Drinks" />
-        <button
-          type="button"
-          onClick={ () => { this.componentDidMount(); } }
-          data-testid="All-category-filter"
-        >
-          All
-        </button>
+        <div className="drinks-divBtnPai">
+          <button
+            type="button"
+            className="drinks-btnCategory"
+            onClick={ () => { this.componentDidMount(); } }
+            data-testid="All-category-filter"
+          >
+            All
+          </button>
 
-        {categoriesDrink.map((ele, index2) => (
-          <div key={ index2 }>
-            <button
-              type="button"
-              id={ ele.strCategory }
-              onClick={ this.categorySelected }
-              data-testid={ `${ele.strCategory}-category-filter` }
-            >
-              { ele.strCategory }
-            </button>
-          </div>
-        ))}
+          {categoriesDrink.map((ele, index2) => (
+            <div key={ index2 }>
+              <button
+                type="button"
+                className="drinks-btnCategory"
+                id={ ele.strCategory }
+                onClick={ this.categorySelected }
+                data-testid={ `${ele.strCategory}-category-filter` }
+              >
+                { ele.strCategory }
+              </button>
+            </div>
+          ))}
+        </div>
         <div className="drinks-divPai">
           {drinkState.map((ele, index) => (
             <Link to={ `/drinks/${ele.idDrink}` } key={ index } className="drinks-link">
