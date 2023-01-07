@@ -17,6 +17,8 @@
 }
 
 .HeaderSecondDiv {
+
+  /* background: linear-gradient(to bottom, #f50043 5%, #b71741 100%); */
   background-color: var(--color-red);
   display: flex;
   justify-content: space-around;
