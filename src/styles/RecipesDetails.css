@@ -1,0 +1,18 @@
+.RecipeD-image {
+  align-self: center;
+  width: 300px;
+}
+
+.RecipeD-DivSec {
+  display: flex;
+  flex-direction: column;
+}
+
+.RecipeD-btnsPdiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.RecipesD-Fav-Share-BTN {
+  display: flex;
+}

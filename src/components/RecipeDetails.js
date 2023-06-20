@@ -8,6 +8,7 @@ import getRecipeForId from '../services/getRecipeForId';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
 import RecommendationCard from './RecommendationCard';
+import '../styles/RecipesDetails.css';
 
 function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   const dispatch = useDispatch();
@@ -99,28 +100,34 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
   if (loading) { return <h1>Carregando...</h1>; }
   return (
     <div>
+
       {ingredients ? (
         <>
-          <button
-            type="button"
-            onClick={ () => {
-              if (pathname.includes('drinks')) {
-                history.push('/drinks');
-              } else {
-                history.push('/meals');
-              }
-            } }
-          >
-            Voltar
-          </button>
-          <FavoriteButton />
-          <ShareButton />
+          <div className="RecipeD-btnsPdiv">
+            <button
+              type="button"
+              onClick={ () => {
+                if (pathname.includes('drinks')) {
+                  history.push('/drinks');
+                } else {
+                  history.push('/meals');
+                }
+              } }
+            >
+              Voltar
+            </button>
+            <div className="RecipesD-Fav-Share-BTN">
+              <FavoriteButton />
+              <ShareButton />
+            </div>
+          </div>
           {!pathname.includes('drinks') ? (
             <section>
               <img
                 src={ recipe[type][0].strMealThumb }
                 alt={ recipe[type][0].strMeal }
                 data-testid="recipe-photo"
+                className="RecipeD-image"
               />
               <h3 data-testid="recipe-title">{recipe[type][0].strMeal}</h3>
               <p data-testid="recipe-category">{recipe[type][0].strCategory}</p>
@@ -142,11 +149,12 @@ function RecipeDetails({ match: { params: { id } }, location: { pathname } }) {
               />
             </section>
           ) : (
-            <section>
+            <section className="RecipeD-DivSec">
               <img
                 src={ recipe[type][0].strDrinkThumb }
                 alt={ recipe[type][0].strDrink }
                 data-testid="recipe-photo"
+                className="RecipeD-image"
               />
               <h3 data-testid="recipe-title">{recipe[type][0].strDrink}</h3>
               <p data-testid="recipe-category">{recipe[type][0].strAlcoholic}</p>

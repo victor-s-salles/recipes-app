@@ -22,7 +22,7 @@
   background-color: var(--color-red);
   display: flex;
   justify-content: space-around;
-  padding: 14px 0;
+  padding: 15px 0;
   width: 100%;
 }
 
@@ -55,13 +55,13 @@
 }
 
 .HeaderProfileBTN {
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
 }
 
 .HeaderSearchBTN {
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
 }
 
 .HeaderPageName {
